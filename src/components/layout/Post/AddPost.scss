@@ -1,0 +1,64 @@
+
+@use "/src/global.scss";
+
+.postBody {
+    width: 60%;
+
+    @media screen and (max-width: 600px) {
+        width: 80%;
+    }
+
+    margin: 10px 0;
+    .topDiv {
+        background-color: var(--palette-primary-300);
+
+        border-radius: 15px 15px 0 0;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 10px 10px;
+
+        .avatarSection {
+            display: flex;
+            align-items: center;
+            #infoTxt {
+                font-size: 16px;
+                margin-left: 8px;
+            }
+        }
+        .uxSection {
+            display: flex;
+            align-items: center;
+            #infoTxt2 {
+                margin:0 4px
+            }
+        }
+    }
+    .centerDiv {
+        background-color: var(--palette-neutral-100);
+        
+        padding: 10px;
+
+        .textarea {
+            width: 100%;
+            min-height: 50px;
+
+            resize: vertical;
+            box-sizing: border-box;
+
+            font-size: 16px;
+        }
+    }
+    .bottomDiv {
+        background-color: var(--palette-neutral-50);
+
+        border-radius: 0 0 15px 15px;
+
+        padding: 6px 10px;
+
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -1,0 +1,51 @@
+@use "/src/global.scss";
+
+.PostButtonDiv {
+    height: fit-content;
+    width: fit-content;
+
+    display: flex;
+
+    background-color: var(--palette-primary-500);
+
+    border-radius: 25px;
+
+    padding: 2px 5px;
+
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--palette-primary-700);
+    }
+
+    .PostButton {
+        border: none;
+
+        cursor: pointer;
+
+        font-size: 20px;
+
+        color: var(--palette-neutral-100);
+
+        background: transparent;
+
+        font-family: "League Spartan", sans-serif;
+    }
+}
+
+.checkButton {
+    background-color: var(--palette-primary-400);
+
+    border: 2px solid var(--palette-primary-200);
+    color: var(--palette-neutral-100);
+
+    border-radius: 10px;
+
+    cursor: pointer;
+    
+    margin-top: 10px;
+
+    &:hover {
+        background-color: var(--palette-primary-500);
+    }
+}

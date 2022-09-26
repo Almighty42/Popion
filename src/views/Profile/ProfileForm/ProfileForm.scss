@@ -1,0 +1,10 @@
+
+@use "/src/global.scss";
+
+.inputDiv.disabled {
+    background-color: var(--palette-neutral-100) !important;
+}
+
+.input.pfp {
+    width: max-content;
+}

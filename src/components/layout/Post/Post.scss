@@ -1,0 +1,40 @@
+
+@use "/src/global.scss";
+
+.postBody {
+    .centerDiv.noUser {
+        padding-bottom: 40px;
+        border-radius: 0 0 15px 15px;
+    }
+    .bottomDiv.Post {
+        flex-flow: column;
+        border-radius: 0px;
+        padding: 6px 15px 10px 15px;
+
+        #commentInfo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 10px;
+            .avatarSection {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}
+w
+.textarea {
+    width: 100%;
+    min-height: 50px;
+
+    resize: vertical;
+    box-sizing: border-box;
+
+    font-size: 16px;
+}
+
+.body {
+
+}

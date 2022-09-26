@@ -1,0 +1,48 @@
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;700&display=swap');
+
+body {
+    margin: 0
+}
+
+h1,h2,h3,h4,h5,h6,p {
+    margin:0;
+    font-family: 'League Spartan', sans-serif;
+}
+
+// Color pallete
+
+$palettes: (
+    primary: (
+        900: #002233,
+        800: #004466,
+        700: #006699,
+        600: #0088CC,
+        500: #00AAFF,
+        400: #33BBFF,
+        300: #67CCFF,
+        200: #99DDFF,
+        100: #CDEEFF,
+    ),
+    neutral: (
+        900: #2B333B,
+        800: #414D58,
+        700: #495865,
+        600: #506171,
+        500: #556777,
+        400: #879AAB,
+        300: #A5B4C1,
+        200: #CBD4DC,
+        100: #F0F2F5,
+        50: #F5F7FA
+    )
+);
+
+:root {
+    @each $colorname, $palette in $palettes {
+        @each $key, $value in $palette {
+            $keyname: "--palette-" + $colorname + "-" + $key;
+            #{$keyname}: #{$value};
+        }
+    }
+}
