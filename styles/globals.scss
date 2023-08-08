@@ -1,0 +1,218 @@
+body,h1,h2,h3,h4,h5,h6,p,ul, hr {
+  margin: 0
+}
+
+div, nav, ul, button {
+  display: flex;
+}
+ul {
+  list-style-type: none;
+}
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+// Shades
+$black: #000;
+$white: #FFF;
+// Neutral
+$neutral-50: #F8FAFC;
+$neutral-100: #F1F5F9;
+$neutral-200: #E2E8F0;
+$neutral-300: #CBD5E1;
+$neutral-400: #94A3B8;
+$neutral-500: #64748B;
+$neutral-600: #475569;
+$neutral-700: #334155;
+$neutral-800: #1E293B;
+$neutral-900: #0F172A;
+// Primary
+$primary-50: #e8edfb;
+$primary-100: #bbcaf3;
+$primary-200: #8ea7ec;
+$primary-300: #6183e4;
+$primary-400: #3460dc;
+$primary-500: #1d4ed8;
+$primary-600: #173ead;
+$primary-700: #112f82;
+$primary-800: #0c1f56;
+$primary-900: #06102b;
+// Red
+$red-50: #FEF2F2;
+$red-100: #FEE2E2;
+$red-200: #FECACA;
+$red-300: #FCA5A5;
+$red-400: #F87171;
+$red-500: #EF4444;
+$red-600: #DC2626;
+$red-700: #B91C1C;
+$red-800: #991B1B;
+$red-900: #7F1D1D;
+// Yellow
+$yellow-50: #FFFBEB;
+$yellow-100: #FEF3C7;
+$yellow-200: #FDE68A;
+$yellow-300: #FCD34D;
+$yellow-400: #FBBF24;
+$yellow-500: #F59E0B;
+$yellow-600: #D97706;
+$yellow-700: #B45309;
+$yellow-800: #92400E;
+$yellow-900: #78350F;
+// Green
+$green-50: #ECFDF5;
+$green-100: #D1FAE5;
+$green-200: #A7F3D0;
+$green-300: #6EE7B7;
+$green-400: #34D399;
+$green-500: #10B981;
+$green-600: #059669;
+$green-700: #047857;
+$green-800: #065F46;
+$green-900: #064E3B;
+.frame {
+  flex-direction: column;
+  width: 100%;
+  padding: 0 32px;
+  .bodyFrame {
+    .leftFrame,.centerFrame,.rightFrame {
+      flex-direction: column;
+    }
+    .leftFrame {
+      >:first-child {
+        margin-bottom: 20px;
+      }
+    }
+    .centerFrame {
+      margin: 0 32px;
+      width: 100%;
+      height: calc(100vh - 72px);
+      .feed {
+        flex-direction: column;
+        overflow-y: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        height: 100%;
+        > *:not(:first-child) {
+          margin-top: 20px;
+        }
+        >:last-child {
+          margin-bottom: 20px;
+          width: 100%;
+          justify-content: center;
+          h6 {
+            color: $primary-500;
+          }
+        }
+      }
+      > *:not(:first-child) {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+hr {
+  height: 1px;
+  background-color: $neutral-300;
+  border: none;
+}
+input {
+  border: 2px solid $neutral-300;
+  width: 100%;
+  border-radius: 10px;
+  padding-left: 16px;
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Inter', sans-serif;
+  height: 32px;
+  ::placeholder {
+    color: $neutral-400;
+  }
+}
+body {
+  background-color: $neutral-50;
+  overflow-y: hidden;
+}
+// Typography
+h1,h2,h3,h4,h5,h6,p {
+  font-family: 'Inter', sans-serif;
+  color: $neutral-900;
+}
+h1 {
+  font-size: 48px;
+  line-height: 56px;
+}
+h2 {
+  font-size: 39px;
+  line-height: 47px;
+}
+h3 {
+  font-size: 33px;
+  line-height: 40px;
+}
+h4 {
+  font-size: 28px;
+  line-height: 34px;
+}
+h5 {
+  font-size: 23px;
+  line-height: 28px;
+}
+h6 {
+  font-size: 19px;
+  line-height: 23px;
+}
+p {
+  &.subheading { font-size: 20px; line-height: 28px; }
+  &.p1 { font-size: 14px; line-height: 17px; }
+  &.p2 { font-size: 16px; line-height: 24px; }
+  &.p3 { font-size: 18px; line-height: 22px; }
+  &.caption { font-size: 12px; line-height: 18px; }
+  &.footer { font-size: 10px; line-height: 14px; }
+}
+.semibold {
+  font-weight: 600;
+}
+// Mixins
+@mixin section {
+  padding: 16px 20px;
+  border: 2px solid $primary-100;
+  border-radius: 10px;
+  background-color: $white;
+  height: fit-content;
+}
+@mixin svg-p($color) {
+  svg {
+    stroke: $color;
+    stroke-width: 3px;
+  }
+  p {
+    color: $color
+  }
+}
+@mixin button($type, $color, $child, $svg) {
+  @if $type == primary {
+    @include svg-p($white);
+    background-color: $color;
+    border-color: $color;
+    svg {
+      stroke-width: 2px;
+    }
+  } @else {
+    @include svg-p($color);
+    background-color: $white;
+    border-color: $color;
+  }
+  @if $child {
+    >:first-child {
+      margin-right: 12px;
+    }
+  }
+  svg {
+    fill: $white;
+  }
+}
