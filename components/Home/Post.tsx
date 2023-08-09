@@ -20,7 +20,9 @@ const Post = ({ props }: PostProps) => {
             <p className="caption"> Few minutes ago </p>
           </div>
         </div>
-        <FiMoreVertical size={24} />
+        <button>
+          <FiMoreVertical size={24} />
+        </button>
       </div>
       <p className="p1" >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.labore et dolore magna aliqua.labore et dolore magna aliqua.labore et dolore magna aliqua.labore et dolore magna aliqua.</p>
       <div className="actions">

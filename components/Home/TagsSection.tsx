@@ -1,32 +1,45 @@
 import { FiSettings } from "react-icons/fi";
+import { useMediaQuery } from "react-responsive";
 
 interface TagsSectionProps {
-    props: any;
+    loggedIn: boolean;
 }
 
-const TagsSection = ({ props }: TagsSectionProps) => {
+const TagsSection = ({ loggedIn }: TagsSectionProps) => {
+
     return (
         <div className="tagsSection">
             <div className="header">
-                <h5 className="semibold" > For you </h5>
-                <button>
-                    <FiSettings size={24} />
-                </button>
+                <h5 className="semibold" > {loggedIn ? 'For you' : 'Trending tags'} </h5>
+                <h6 className="semibold" > {loggedIn ? 'For you' : 'Trending tags'} </h6>
+                {loggedIn &&
+                    <button>
+                        <FiSettings size={24} />
+                    </button>
+                }
             </div>
             <div className="tags">
-                <h6 className="semibold"> Trending in Serbia </h6>
+                {/* {isDesktop ?
+                <h6 className="semibold"> Trending in Serbia </h6> :
+                <p className="p1 semibold"> Trending in Serbia </p>                
+                } */}
                 <Tag text='#Minions' />
                 <Tag text='#CrniCerak' />
             </div>
             <hr />
             <div className="tags">
-                <h6 className="semibold"> MMA - trending </h6>
+            {/* {isDesktop ?
+                <h6 className="semibold"> MMA - trending </h6> :
+                <p className="p1 semibold"> MMA - trending </p>                
+                } */}
                 <Tag text='#ConnorMcgregor' />
                 <Tag text='#JonJones' />
             </div>
-            <button>
-                <p className="p2 semibold" > Show more </p>
-            </button>
+            {loggedIn &&
+                <button>
+                    <p className="p2 semibold" > Show more </p>
+                </button>
+            }
         </div>
     );
 }

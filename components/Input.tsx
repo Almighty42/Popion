@@ -1,10 +1,17 @@
 interface InputProps {
+  type: 'submit' | 'text' | 'email' | 'password',
   text: string;
+  size: 'small' | 'regular' | 'large';
+  border?: 'colored' | 'uncolored'
+  icon?: JSX.Element;
 }
 
-const Input = ({ text }: InputProps) => {
+const Input = ({ type, text, size, border, icon }: InputProps) => {
   return (
-    <input placeholder={text} />
+    <div className={'inputBody ' + size + ' ' + border} >
+      <input type={type} placeholder={text} />
+      {icon}
+    </div>
   );
 }
 

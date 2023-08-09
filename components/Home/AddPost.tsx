@@ -1,5 +1,5 @@
 import Avatar from "react-avatar";
-import {AddImgButton, Button} from "../Buttons";
+import {AddImgButton, AddPostButton, Button} from "../Buttons";
 import { FiImage, FiPlus } from "react-icons/fi";
 import Input from "../Input";
 
@@ -11,9 +11,9 @@ const AddPost = ({ props }: AddPostProps) => {
   return (
     <div className="addPost">
         <Avatar size="40" round />
-        <Input text="What's happening?" />
+        <Input text="What's happening?" size="small" type="text" border="uncolored" />
         <AddImgButton />
-        <Button type="primary" icon={<FiPlus size={16} />} text="Create post" size="small" />
+        <AddPostButton />
     </div>
   );
 }

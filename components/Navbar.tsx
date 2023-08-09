@@ -5,9 +5,13 @@ import '@/styles/Components.scss'
 import Avatar from 'react-avatar';
 import { Button } from './Buttons';
 import { Dispatch, useState } from 'react';
+import { useMediaQuery } from 'react-responsive'
+import { slide as Menu } from 'react-burger-menu'
 
 interface NavbarProps {
-    loggedIn: boolean
+    loggedIn: boolean,
+    setShowModal?: any,
+    setAuth? : any
 }
 interface LinkItemProps {
     type: string,
@@ -18,7 +22,7 @@ interface ProfileButtonProps {
     setToggle: any,
 }
 
-const Navbar = ({ loggedIn }: NavbarProps) => {
+const Navbar = ({ loggedIn, setShowModal, setAuth }: NavbarProps) => {
 
     const [toggle, setToggle] = useState(false)
 
@@ -29,7 +33,13 @@ const Navbar = ({ loggedIn }: NavbarProps) => {
     return (
         <nav className='nav'>
             <div className='leftSection'>
+                <Menu>
+                    <p> Element 1 </p>
+                    <p> Element 2 </p>
+                    <p> Element 3 </p>
+                </Menu>
                 <h3> <span>Pop</span>ion </h3>
+                <h4> <span>Pop</span>ion </h4>
                 <ul>
                     <LinkItem type='home' selected />
                     {loggedIn && (
@@ -53,8 +63,8 @@ const Navbar = ({ loggedIn }: NavbarProps) => {
                 ) :
                     (
                         <>
-                            <Button type='primary' icon={<FiUserPlus size={16} />} text='Register' size='small' />
-                            <Button type='primary' icon={<FiLogIn size={16} />} text='Login' size='small' />
+                            <Button type='primary' icon={<FiUserPlus size={16} />} text='Register' size='small' execute={() => { setShowModal(true); setAuth(true) }} animation />
+                            <Button type='primary' icon={<FiLogIn size={16} />} text='Login' size='small' execute={() => { setShowModal(true); setAuth(false) }} animation />
                         </>
                     )
                 }

@@ -3,21 +3,20 @@ import Avatar from 'react-avatar';
 import { Button } from '../Buttons';
 import { FiEye, FiLogIn, FiUser } from 'react-icons/fi';
 import { BiMessageRoundedError } from 'react-icons/bi'
+import { useMediaQuery } from 'react-responsive';
 
 interface OnlineSectionProps {
     loggedIn: boolean
 }
 
 const OnlineSection = ({ loggedIn }: OnlineSectionProps) => {
+
     return loggedIn ? (
         <div className={'onlineSection loggedIn'} >
             <h5 className='semibold'> Who's online now </h5>
+            <h6 className='semibold'> Who's online now </h6>
             <ul>
                 <Item notification={true} />
-                <hr />
-                <Item notification={false} />
-                <hr />
-                <Item notification={false} />
                 <hr />
                 <Item notification={false} />
             </ul>

@@ -1,12 +1,9 @@
-@use 'globals';
+@use "globals";
 
 .profileSection {
-    width: 329px;
-    background-color: globals.$white;
-    border-radius: 10px;
     flex-direction: column;
     align-items: center;
-    padding: 16px 20px;
+    @include globals.section;
     &.loggedIn {
         border: 2px solid globals.$primary-100;
     }
@@ -21,7 +18,7 @@
             text-align: center;
         }
         .auth {
-            >:first-child {
+            > :first-child {
                 margin-right: 20px;
             }
         }
@@ -56,7 +53,7 @@
                 color: globals.$neutral-700;
             }
             .p1 {
-                color: globals.$neutral-400
+                color: globals.$neutral-400;
             }
         }
     }
@@ -68,8 +65,20 @@
 }
 .onlineSection {
     @include globals.section;
-    width: 329px;
     flex-direction: column;
+    @media (min-width: globals.$breakpointW-DesktopXL) or (min-height: globals.$breakpointH-DesktopXL) {
+        h6 {
+            display: none;
+        }
+    }
+    @media (max-width: globals.$breakpointW-DesktopXL) or (max-height: globals.$breakpointH-DesktopXL) {
+        h6 {
+            display: block;
+        }
+        h5 {
+            display: none;
+        }
+    }
     ul {
         flex-direction: column;
         padding: 0;
@@ -127,10 +136,10 @@
                 flex-direction: column;
                 margin-left: 24px;
                 .info {
-                    align-items: center;
+                    align-items: flex-end;
                     .caption {
                         margin-left: 4px;
-                        color: globals.$primary-300
+                        color: globals.$primary-300;
                     }
                 }
                 .caption {
@@ -139,7 +148,7 @@
             }
         }
         svg {
-            color: globals.$primary-300
+            color: globals.$primary-300;
         }
     }
     .p1 {
@@ -148,7 +157,7 @@
     .actions {
         justify-content: space-between;
         .left {
-            >:first-child {
+            > :first-child {
                 margin-right: 16px;
             }
         }
@@ -157,7 +166,6 @@
 .tagsSection {
     @include globals.section;
     flex-direction: column;
-    width: 329px;
     hr {
         height: 2px;
     }
@@ -169,13 +177,27 @@
         svg {
             stroke: globals.$neutral-700;
         }
+        @media (min-width: globals.$breakpointW-DesktopXL) or (min-height: globals.$breakpointH-DesktopXL) {
+            h6 {
+                display: none;
+            }
+        }
+        @media (max-width: globals.$breakpointW-DesktopXL) or (max-height: globals.$breakpointH-DesktopXL) {
+            h6 {
+                display: block;
+            }
+            h5 {
+                display: none;
+            }
+        }
     }
     .tags {
         flex-direction: column;
         > *:not(:last-child) {
             margin-bottom: 4px;
         }
-        h6 {
+        h6,
+        .p1 {
             color: globals.$neutral-600;
         }
         .tag {
