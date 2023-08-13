@@ -14,11 +14,14 @@ hr {
 div,
 nav,
 ul,
-button {
+button,
+a,
+li {
   display: flex;
 }
 ul {
   list-style-type: none;
+  padding: 0;
 }
 button {
   border: none;
@@ -87,14 +90,14 @@ $green-900: #064e3b;
 $breakpointW-DesktopXL: 1439px;
 $breakpointH-DesktopXL: 899px;
 $breakpointW-Desktop: 1151px;
-$breakpointH-Desktop: 699px;
+$breakpointH-Desktop: 599px;
 $breakpointW-Tablet: 768px;
 $breakpointH-Tablet: 1024px;
 $breakpointW-Mobile: 400px;
 $breakpointH-Mobile: 568px;
 
 @media (min-width: $breakpointW-DesktopXL) or (min-height: $breakpointH-DesktopXL) {
-  .nav {
+  .navbar {
     height: 72px;
     padding: 0 32px;
   }
@@ -115,7 +118,7 @@ $breakpointH-Mobile: 568px;
   }
 };
 @media (max-width: $breakpointW-DesktopXL) or (max-height: $breakpointH-DesktopXL)  {
-  .nav {
+  .navbar {
     height: 72px;
     padding: 0 32px;
   }
@@ -136,7 +139,7 @@ $breakpointH-Mobile: 568px;
   }
 }
 @media (max-width: $breakpointW-Desktop) or (max-height: $breakpointH-Desktop)  {
-  .nav {
+  .navbar {
     height: 72px;
     padding: 0 16px;
   }
@@ -157,7 +160,7 @@ $breakpointH-Mobile: 568px;
   }
 }
 @media (max-width: $breakpointW-Tablet) or (max-height: $breakpointH-Desktop)  {
-  .nav {
+  .navbar {
     height: 72px;
     padding: 0 16px;
   }
@@ -176,7 +179,7 @@ $breakpointH-Mobile: 568px;
   }
 }
 @media (max-width: $breakpointW-Mobile) {
-  .nav {
+  .navbar {
     height: 72px;
     padding: 0 16px;
     div {
@@ -213,6 +216,7 @@ $breakpointH-Mobile: 568px;
       }
     }
     .centerFrame {
+      width: 100%;
       .feed {
         flex-direction: column;
         overflow-y: scroll;
@@ -225,8 +229,8 @@ $breakpointH-Mobile: 568px;
           display: none;
         }
         height: 100%;
-        > *:not(:first-child) {
-          margin-top: 20px;
+        > *:not(:last-child) {
+          margin-bottom: 20px;
         }
         > :last-child {
           margin-bottom: 20px;
@@ -238,7 +242,7 @@ $breakpointH-Mobile: 568px;
         }
       }
       > *:not(:first-child) {
-        margin-top: 20px;
+        margin-top: 20px !important; 
       }
     }
   }
@@ -339,7 +343,7 @@ p {
     color: $color;
   }
 }
-@mixin button($type, $color, $child, $svg) {
+@mixin button($type, $color, $child, $svgMargin) {
   @if $type == primary {
     @include svg-p($white);
     background-color: $color;
@@ -354,7 +358,7 @@ p {
   }
   @if $child {
     > :first-child {
-      margin-right: 12px;
+      margin-right: $svgMargin;
     }
   }
   svg {

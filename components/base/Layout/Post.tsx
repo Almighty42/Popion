@@ -1,12 +1,11 @@
+// Other
 import Avatar from "react-avatar";
-import { FiHeart, FiMoreVertical } from "react-icons/fi";
+// Icons
+import { FiMoreVertical } from "react-icons/fi";
+// Components
 import { CommentButton, LikeButton, SaveButton } from "../Buttons";
 
-interface PostProps {
-  props: any;
-}
-
-const Post = ({ props }: PostProps) => {
+const Post = () => {
   return (
     <div className="post">
       <div className="header">
@@ -26,7 +25,7 @@ const Post = ({ props }: PostProps) => {
       </div>
       <p className="p1" >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.labore et dolore magna aliqua.labore et dolore magna aliqua.labore et dolore magna aliqua.labore et dolore magna aliqua.</p>
       <div className="actions">
-        <div className="left">
+        <div className="leftActions">
           <LikeButton />
           <CommentButton />
         </div>

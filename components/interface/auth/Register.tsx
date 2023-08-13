@@ -1,30 +1,27 @@
+// Icons
 import { FiKey, FiLogIn, FiMail, FiRepeat, FiUser, FiX } from "react-icons/fi";
-import { Button } from "../Buttons";
-import Input from "../Input";
-import { motion } from "framer-motion"; // Import motion
+// Components
+import { Button } from "@/components/base/Buttons";
+import Input from "@/components/base/Input";
+// Framer motion
+import { motion } from "framer-motion";
+// Redux
+import { useDispatch } from "react-redux";
+import { actions } from "@/redux/store";
+// Animation
+import { popInVariant1, animationOptions } from "@/redux/other";
 
-const popInVariant = {
-    hidden: { opacity: 0, scale: 0.5 }, // Initial hidden state
-    visible: { opacity: 1, scale: 1 } // Visible state
-};
+const Register = () => {
+    // Dispatch
+    const dispatch = useDispatch()
 
-const animationOptions = {
-    duration: 0.2, // Adjust the duration to make it slower (in seconds)
-    ease: "easeInOut" // Apply an easing function if desired
-};
-
-interface RegisterProps {
-    setShowModal: any;
-}
-
-const Register = ({ setShowModal }: RegisterProps) => {
     return (
         <motion.div
+            className="authFrame"
             initial="hidden"
             animate="visible"
-            variants={popInVariant}
+            variants={popInVariant1}
             transition={animationOptions}
-            className="authSection"
         >
             <h1 className="semibold"> Register on <span>Pop</span>ion </h1>
             <div className="inputs">
@@ -52,8 +49,8 @@ const Register = ({ setShowModal }: RegisterProps) => {
                 </div>
             </div>
             <div className="actions">
-                <Button type="primary" icon={<FiLogIn size={16} />} text="Login" size="regular" />
-                <Button type="ghost" icon={<FiX size={16} />} text="Cancel" size="regular" execute={() => { setShowModal(false) }} />
+                <Button type="primary" icon={<FiLogIn size={16} />} text="Login" size="regular" animation />
+                <Button type="ghost" icon={<FiX size={16} />} text="Cancel" size="regular" execute={() => { dispatch(actions.modalActions.turnOff()) }} animation />
             </div>
         </motion.div>
     );

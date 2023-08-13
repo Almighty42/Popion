@@ -1,24 +1,21 @@
+// Style
 import '@/styles/Home.scss'
+// Other
 import Avatar from 'react-avatar';
-import { Button } from '../Buttons';
-import { FiEye, FiLogIn, FiUser } from 'react-icons/fi';
-import { BiMessageRoundedError } from 'react-icons/bi'
-import { useMediaQuery } from 'react-responsive';
+// Components
+import { Button } from '../../base/Buttons';
+// Icons
+import { FiEye } from 'react-icons/fi';
 
-interface OnlineSectionProps {
-    loggedIn: boolean
-}
-
-const OnlineSection = ({ loggedIn }: OnlineSectionProps) => {
-
+const OnlineSection = ({ loggedIn }: { loggedIn : boolean }) => {
     return loggedIn ? (
         <div className={'onlineSection loggedIn'} >
             <h5 className='semibold'> Who's online now </h5>
             <h6 className='semibold'> Who's online now </h6>
             <ul>
-                <Item notification={true} />
+                <Item />
                 <hr />
-                <Item notification={false} />
+                <Item />
             </ul>
             <button>
                 <p className='p2 semibold' > Show more </p>
@@ -30,7 +27,7 @@ const OnlineSection = ({ loggedIn }: OnlineSectionProps) => {
     )
 }
 
-const Item = (notification: any) => {
+const Item = () => {
     return (
         <li>
             <div className="left">

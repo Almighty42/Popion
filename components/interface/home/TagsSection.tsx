@@ -1,12 +1,7 @@
+// Icons
 import { FiSettings } from "react-icons/fi";
-import { useMediaQuery } from "react-responsive";
 
-interface TagsSectionProps {
-    loggedIn: boolean;
-}
-
-const TagsSection = ({ loggedIn }: TagsSectionProps) => {
-
+const TagsSection = ({ loggedIn }: { loggedIn: boolean }) => {
     return (
         <div className="tagsSection">
             <div className="header">
@@ -19,19 +14,11 @@ const TagsSection = ({ loggedIn }: TagsSectionProps) => {
                 }
             </div>
             <div className="tags">
-                {/* {isDesktop ?
-                <h6 className="semibold"> Trending in Serbia </h6> :
-                <p className="p1 semibold"> Trending in Serbia </p>                
-                } */}
                 <Tag text='#Minions' />
                 <Tag text='#CrniCerak' />
             </div>
             <hr />
             <div className="tags">
-            {/* {isDesktop ?
-                <h6 className="semibold"> MMA - trending </h6> :
-                <p className="p1 semibold"> MMA - trending </p>                
-                } */}
                 <Tag text='#ConnorMcgregor' />
                 <Tag text='#JonJones' />
             </div>

@@ -1,39 +1,23 @@
+// React
 import { useState } from "react";
-import { FiBookmark, FiHeart, FiImage, FiMessageCircle, FiPlus, FiSave, FiX } from "react-icons/fi";
-import { motion, useAnimation } from 'framer-motion';
-import { useMediaQuery } from "react-responsive";
+// Icons
+import { FiBookmark, FiHeart, FiImage, FiMessageCircle, FiPlus, FiX } from "react-icons/fi";
+// Framer motion
+import { motion } from 'framer-motion';
+// Animation
+import { popVariant2 } from "@/redux/other";
 
+// Interface
 interface ButtonProps {
-  type: string;
+  type: 'primary' | 'ghost';
   icon?: JSX.Element,
   text?: string;
-  size?: string;
+  size?: 'small' | 'regular' | 'large';
   execute?: any;
-  animation: boolean;
+  animation?: boolean;
 }
 
-const popVariant = {
-  initial: { scale: 1 },
-  pop: { scale: [1, 1.2, 1], transition: { duration: 0.3 } },
-};
-
-const scaleAndSplashVariant = {
-  pressed: { scale: 1.1, backgroundColor: "#007BFF" },
-  rest: { scale: 1, backgroundColor: "transparent" }
-};
-
-const rippleVariant = {
-  animate: {
-      scale: [1, 1.5, 1.8, 1.5, 1],
-      opacity: [0.8, 0.6, 0.4, 0.2, 0],
-      transition: { duration: 0.5, ease: "easeInOut" }
-  }
-};
-
 const Button = ({ type, icon, text, size, execute, animation }: ButtonProps) => {
-
-  console.log(execute)
-
   const p = size == 'small' ? 'caption' : size == 'large' ? 'p2' : 'p1'
   return (
     <>
@@ -41,9 +25,8 @@ const Button = ({ type, icon, text, size, execute, animation }: ButtonProps) => 
         <motion.button
           className={'button ' + type + ' ' + size}
           onClick={execute}
-          animate="raised"
-          variants={scaleAndSplashVariant}
-          transition={{ duration: 0.2 }}
+          whileTap="pop"
+          variants={popVariant2}  
         >
           {icon}
           <p className={p + " semibold left"} > {text} </p>
@@ -64,7 +47,7 @@ const AddImgButton = () => {
       className={'button add ' + value + ' small'}
       onClick={() => setValue(value == 'ghost' ? 'primary' : 'ghost')}
       whileTap="pop"
-      variants={popVariant}
+      variants={popVariant2}
     >
       <FiImage size={16} />
       {value == 'primary' && <FiX size={16} />}
@@ -73,36 +56,14 @@ const AddImgButton = () => {
 }
 
 const AddPostButton = () => {
-
-  const [ripple, setRipple] = useState(false);
-  const controls = useAnimation();
-
-  const handleTap = () => {
-    setRipple(true);
-    controls.start({ scale: 1.1, transition: { duration: 0.1 } });
-    setTimeout(() => {
-      setRipple(false);
-      controls.start({ scale: 1 });
-    }, 200);
-  };
-
   return (
     <motion.button
       className="button post small"
-      onTap={handleTap}
-      initial={{ scale: 1 }}
-      animate={controls}
-    >
-      {ripple && (
-        <motion.div
-          className="ripple"
-          initial={{ scale: 0, opacity: 0.4 }}
-          animate={{ scale: 1, opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        />
-      )}
+      whileTap="pop"
+      variants={popVariant2}    
+      >
       <FiPlus size={16} />
-      <p className="caption semibold dynamic"> Add post </p>
+      <p className="caption semibold dynamicParagraph"> Add post </p>
     </motion.button>
   )
 }
@@ -114,9 +75,9 @@ const LikeButton = () => {
       className={'button like ' + value + ' small'}
       onClick={() => setValue(value == 'ghost' ? 'primary' : 'ghost')}
       whileTap="pop"
-      variants={popVariant}
+      variants={popVariant2}
     >
-      <p className='caption semibold dynamic' > Like{value == 'ghost' ? '' : 'd'} </p>
+      <p className='caption semibold dynamicParagraph' > Like{value == 'ghost' ? '' : 'd'} </p>
       <p className='caption semibold right' > 3 </p>
       <FiHeart size={16} />
     </motion.button>
@@ -130,9 +91,9 @@ const CommentButton = () => {
       className={'button comment ' + value + ' small'}
       onClick={() => setValue(value == 'ghost' ? 'primary' : 'ghost')}
       whileTap="pop"
-      variants={popVariant}
+      variants={popVariant2}
     >
-      <p className='caption semibold dynamic' > Comments </p>
+      <p className='caption semibold dynamicParagraph' > Comments </p>
       <p className='caption semibold right' > 3 </p>
       <FiMessageCircle size={16} />
     </motion.button>
@@ -146,9 +107,9 @@ const SaveButton = () => {
       className={'button save ' + value + ' small'}
       onClick={() => setValue(value == 'ghost' ? 'primary' : 'ghost')}
       whileTap="pop"
-      variants={popVariant}
+      variants={popVariant2}
     >
-      <p className='caption semibold dynamic' > Save{value == 'ghost' ? '' : 'd'} </p>
+      <p className='caption semibold dynamicParagraph' > Save{value == 'ghost' ? '' : 'd'} </p>
       <FiBookmark size={16} />
     </motion.button>
   )

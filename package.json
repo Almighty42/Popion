@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
@@ -22,7 +23,9 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
     "react-overlays": "^5.2.1",
+    "react-redux": "^8.1.2",
     "react-responsive": "^9.0.2",
+    "redux": "^4.2.1",
     "typescript": "5.1.6"
   },
   "devDependencies": {

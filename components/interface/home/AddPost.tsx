@@ -1,13 +1,10 @@
+// Other
 import Avatar from "react-avatar";
-import {AddImgButton, AddPostButton, Button} from "../Buttons";
-import { FiImage, FiPlus } from "react-icons/fi";
-import Input from "../Input";
+// Components
+import { AddImgButton, AddPostButton } from "../../base/Buttons";
+import Input from "../../base/Input";
 
-interface AddPostProps {
-  props: any;
-}
-
-const AddPost = ({ props }: AddPostProps) => {
+const AddPost = () => {
   return (
     <div className="addPost">
         <Avatar size="40" round />

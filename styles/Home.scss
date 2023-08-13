@@ -125,44 +125,6 @@
     }
     align-items: center;
 }
-.post {
-    @include globals.section;
-    flex-direction: column;
-    .header {
-        justify-content: space-between;
-        align-items: center;
-        .postInfo {
-            .text {
-                flex-direction: column;
-                margin-left: 24px;
-                .info {
-                    align-items: flex-end;
-                    .caption {
-                        margin-left: 4px;
-                        color: globals.$primary-300;
-                    }
-                }
-                .caption {
-                    color: globals.$neutral-400;
-                }
-            }
-        }
-        svg {
-            color: globals.$primary-300;
-        }
-    }
-    .p1 {
-        margin: 12px 0;
-    }
-    .actions {
-        justify-content: space-between;
-        .left {
-            > :first-child {
-                margin-right: 16px;
-            }
-        }
-    }
-}
 .tagsSection {
     @include globals.section;
     flex-direction: column;
