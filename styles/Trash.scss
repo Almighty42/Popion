@@ -71,3 +71,39 @@
     background: rgba(0, 0, 0, 0.3);
     top: 0;
 }
+
+/* .frame {
+    .bodyFrame {
+        height: calc(100vh - 72px);
+        background-color: red;
+        justify-content: center;
+        .centerFrame {
+            .postPage {
+                flex-direction: column;
+                .post {
+                    background: none;
+                    border: none;
+                    box-shadow: none;
+                    padding-top: 0;
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+                .addComment {
+                    > :first-child {
+                        margin-right: 16px;
+                    }
+                }
+                .commentsContent {
+                    .comment {
+                        width: 100%;
+                        justify-content: space-between;
+                        .header {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+ */

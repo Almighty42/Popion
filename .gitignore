@@ -5,8 +5,20 @@
 /.pnp
 .pnp.js
 
+/storage.rules
+/firestore.rules
+/firestore.indexes.json
+
 # testing
 /coverage
+/public
+/functions
+/.vscode
+/process.env
+
+/.firebase
+/.env
+
 
 # next.js
 /.next/

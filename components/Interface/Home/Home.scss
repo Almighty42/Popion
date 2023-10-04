@@ -1,0 +1,184 @@
+@use "../../../styles/globals";
+
+.profileblock {
+    flex-direction: column;
+    align-items: center;
+    @include globals.section;
+    &-loggedin {
+        border: 2px solid globals.$primary-100;
+    }
+    &-loggedout {
+        border: 2px solid globals.$primary-300;
+        h4 {
+            span {
+                color: globals.$primary-500;
+            }
+        }
+        h5 {
+            text-align: center;
+        }
+        .auth {
+            > :first-child {
+                margin-right: 20px;
+            }
+        }
+    }
+    &__actions {
+        > :first-child {
+            margin-right: 20px;
+        }
+    }
+    &__details {
+        flex-direction: column;
+        align-items: center;
+        .info {
+            flex-direction: column;
+            margin: 8px 0px;
+            h4 {
+                color: globals.$neutral-700;
+            }
+            p {
+                color: globals.$primary-300;
+            }
+        }
+        p {
+            text-align: center;
+        }
+    }
+    &__follow {
+        width: 100%;
+        justify-content: space-around;
+        div {
+            flex-direction: column;
+            align-items: center;
+            .p3 {
+                color: globals.$neutral-700;
+            }
+            .p1 {
+                color: globals.$neutral-400;
+            }
+        }
+    }
+    &__button {
+        p {
+            color: globals.$primary-500;
+        }
+    }
+    > *:not(:last-child) {
+        margin-bottom: 16px;
+    }
+}
+.onlineblock {
+    @include globals.section;
+    flex-direction: column;
+    @media (min-width: globals.$breakpointW-DesktopXL) or (min-height: globals.$breakpointH-DesktopXL) {
+        h6 {
+            display: none;
+        }
+    }
+    @media (max-width: globals.$breakpointW-DesktopXL) or (max-height: globals.$breakpointH-DesktopXL) {
+        h6 {
+            display: block;
+        }
+        h5 {
+            display: none;
+        }
+    }
+    &__list {
+        flex-direction: column;
+        padding: 0;
+        margin: 16px 0;
+    }
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        align-items: center;
+        &:hover {
+            background-color: globals.$neutral-100;
+            cursor: pointer;
+        }
+        &__left {
+            align-items: center;
+        }
+        &__right {
+            button {
+                border: none;
+                @include globals.svg-p(globals.$primary-500);
+                cursor: pointer;
+                background: transparent;
+            }
+        }
+        &__text {
+            margin-left: 8px;
+            flex-direction: column;
+            :last-child {
+                margin-top: 4px;
+                color: globals.$primary-300;
+            }
+        }
+    }
+    &__showmore {
+        color: globals.$primary-500;
+    }
+}
+.addpost {
+    @include globals.section;
+    border-color: globals.$primary-300;
+    > *:not(:last-child) {
+        margin-right: 24px;
+    }
+    align-items: center;
+    &-displaynone {
+        display: none;
+    }
+}
+.tagsblock {
+    @include globals.section;
+    flex-direction: column;
+    
+    hr {
+        height: 2px;
+    }
+    &__header {
+        justify-content: space-between;
+        svg {
+            stroke: globals.$neutral-700;
+        }
+        @media (min-width: globals.$breakpointW-DesktopXL) or (min-height: globals.$breakpointH-DesktopXL) {
+            h6 {
+                display: none;
+            }
+        }
+        @media (max-width: globals.$breakpointW-DesktopXL) or (max-height: globals.$breakpointH-DesktopXL) {
+            h6 {
+                display: block;
+            }
+            h5 {
+                display: none;
+            }
+        }
+    }
+    &__tags {
+        flex-direction: column;
+        > *:not(:last-child) {
+            margin-bottom: 4px;
+        }
+        h6,
+        .p1 {
+            color: globals.$neutral-600;
+        }
+    }
+    &__tag {
+        flex-direction: column;
+        .p1 {
+            color: globals.$neutral-400;
+        }
+    }
+    &__showmore {
+        color: globals.$primary-500;
+    }
+    > *:not(:last-child) {
+        margin-bottom: 16px;
+    }
+}
