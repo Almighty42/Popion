@@ -22,8 +22,6 @@ const PopupAddImage = () => {
         dispatch(actions.imageActions.cropImage(cropper?.getCroppedCanvas().toDataURL()))        
     };
 
-    // TODO Sometimes when clicking add image it doesn't trigger modal
-
     return (
         <div className="cropperbody cropperbody-section" >
             <Cropper

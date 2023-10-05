@@ -19,7 +19,7 @@ interface ButtonProps {
   color?: 'standard' | 'green' | 'like' | 'disabled'
 }
 interface BasicButtonProps {
-  execute(): void
+  execute: any
 }
 interface ExtendedButtonProps extends BasicButtonProps {
   type: 'ghost' | 'primary' | string
@@ -57,7 +57,7 @@ const AddImgButton = ({ execute, type } : ExtendedButtonProps) => {
   return (
     <motion.button
       className={'button add ' + type + ' small'}
-      onClick={() => { execute() }}
+      onClick={(e) => { execute(e) }}
       whileTap="pop"
       variants={popVariant2}
     >

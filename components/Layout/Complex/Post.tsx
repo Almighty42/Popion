@@ -85,10 +85,10 @@ const Post = ({ name, username, createdAt, content, commentCount, postId, userIn
       const likedPostsArray = userInfo.likedPosts
       const mutedUsers = userInfo.mutedUsers
       const blockedUsers = userInfo.bannedUsers
-      
+
       useSetPostButton({ array: savedPostsArray, postId, setState: setSaved })
       useSetPostButton({ array: likedPostsArray, postId, setState: setLiked })
-      
+
       if (mutedUsers.includes(ownerId)) dispatch(actions.postActions.handleMute({ add: true, username }))
       if (blockedUsers.includes(ownerId)) dispatch(actions.postActions.handleBlock({ add: true, username }))
     }
@@ -188,27 +188,34 @@ const Post = ({ name, username, createdAt, content, commentCount, postId, userIn
             <div className="post__content">
               {editPostState ?
                 <>
-                  <Input 
-                  textarea 
-                  size="small" 
-                  text="" 
-                  type="text" 
-                  value={editPostContent} 
-                  onChange={(e: any) => setEditPostContent(e.target.value)} />
+                  <Input
+                    textarea
+                    size="small"
+                    text=""
+                    type="text"
+                    value={editPostContent}
+                    onChange={(e: any) => setEditPostContent(e.target.value)} />
                   {image &&
-                    <Button 
-                    type="ghost" 
-                    animation 
-                    execute={handleDeleteImage} 
-                    icon={<FiTrash2 size={16} />} 
-                    size="small" 
-                    text="Delete image" 
-                    color="like" />
+                    <Button
+                      type="ghost"
+                      animation
+                      execute={handleDeleteImage}
+                      icon={<FiTrash2 size={16} />}
+                      size="small"
+                      text="Delete image"
+                      color="like" />
                   }
                 </>
                 :
                 <>
-                  <p className="post__content__text p1" > {content} </p>
+                  <p className="post__content__text p1">
+                    {content.split(/(#\w+)/g).map((part, index) => {
+                      if (part.match(/^#\w+$/)) {
+                        return <span key={index} className="hashtag">{part}</span>;
+                      }
+                      return part;
+                    })}
+                  </p>
                   {image && !loading &&
                     <div className="post__content__image">
                       <img src={imageSource} />
