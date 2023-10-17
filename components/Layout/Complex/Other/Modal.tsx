@@ -1,14 +1,17 @@
+// React
+import { Dispatch, SetStateAction } from "react";
 // Components
-import { AuthLogin, AuthRegister } from "@/components/Interface/Auth"
-import { NotificationSection } from "../../Interface/Other/Notifications";
-import { ChatBox, ChatsSection } from "../../Interface/Other/Chats";
-import { SearchSection } from "../../Interface/Other/Search";
-import { PopupShare, PopupAddImage, PopupFollowList } from '@/components/Interface/Popups'
+import { AuthLogin, AuthRegister } from "@/components/Pages/Auth"
+import { NotificationSection } from "../../../Pages/Other/Notifications";
+import { ChatBox, ChatsSection } from "../../../Pages/Other/Chats";
+import { SearchSection } from "../../../Pages/Other/Search";
+import { PopupShare, PopupAddImage, PopupFollowList } from '@/components/Pages/Popups'
 // Types
-import { UserProps } from "@/lib/types";
+import { UserInfoProps } from "@/utils/interfaces";
 // Other
 import { Modal } from "react-overlays";
-import { Dispatch, SetStateAction } from "react";
+// Styles
+import './OtherComps.scss'
 
 interface ModalBlockProps {
     modalInfo: {
@@ -17,8 +20,8 @@ interface ModalBlockProps {
     };
     isMin: boolean,
     userId?: string | undefined,
-    userObject? : UserProps | undefined,
-    setLoading: Dispatch<SetStateAction<boolean>>
+    userObject? : UserInfoProps | undefined,
+    setLoading?: Dispatch<SetStateAction<boolean>>
 }
 
 const ModalBlock = ({ modalInfo, isMin, userId, userObject, setLoading }: ModalBlockProps) => {

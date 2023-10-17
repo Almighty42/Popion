@@ -1,0 +1,32 @@
+@use '../../../styles/globals';
+
+.settings--navbar {
+    @include globals.section;
+    width: 329px;
+    flex-direction: column;
+    &__item {
+        margin: 12px 8px;
+        align-items: center;
+        width: fit-content;
+        >:first-child {
+            margin-right: 10px;
+        }
+        cursor: pointer;
+        p {
+            color: globals.$primary-500;
+        }
+        color: globals.$primary-500;
+        &--selected {
+            border-bottom: 2px solid globals.$primary-500;
+        }
+        &--delete {
+            color: globals.$red-600;
+            p {
+                color: globals.$red-600;
+            }
+        }
+    }
+}
+.settings--frame {
+    
+}

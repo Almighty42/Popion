@@ -18,7 +18,11 @@
 
 /.firebase
 /.env
-
+/database-debug.log
+/firebase-debug.log
+/firestore-debug.log
+/pubsub-debug.log
+/ui-debug.log
 
 # next.js
 /.next/

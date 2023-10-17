@@ -4,34 +4,21 @@ import { useState } from "react";
 import { FiBookmark, FiHeart, FiImage, FiMessageCircle, FiPlus, FiX } from "react-icons/fi";
 // Animation
 import { popVariant2 } from "@/lib/animations";
+// Types
+import { BasicButtonProps, ButtonProps, CommentButtonProps, ExtendedButtonProps, LikeButtonProps } from "./SimpleInterface";
 // Other
 import { motion } from 'framer-motion';
 
-// Interface
-interface ButtonProps {
-  type: 'primary' | 'ghost';
-  subType?: 'submit' | 'button',
-  icon?: JSX.Element,
-  text?: string;
-  size?: 'small' | 'regular' | 'large';
-  execute?(): void;
-  animation?: boolean;
-  color?: 'standard' | 'green' | 'like' | 'disabled'
-}
-interface BasicButtonProps {
-  execute: any
-}
-interface ExtendedButtonProps extends BasicButtonProps {
-  type: 'ghost' | 'primary' | string
-}
-interface LikeButtonProps extends ExtendedButtonProps {
-  likeCount: number,
-}
-interface CommentButtonProps {
-  commentCount: number
-}
-
-const Button = ({ type, icon, text, size, execute, animation, subType, color = 'standard' }: ButtonProps) => {
+const Button = ({
+  type,
+  icon,
+  text,
+  size,
+  execute,
+  animation,
+  subType,
+  color = 'standard'
+}: ButtonProps) => {
   const p = size == 'small' ? 'caption' : size == 'large' ? 'p2' : 'p1'
   return (
     <>
@@ -40,7 +27,7 @@ const Button = ({ type, icon, text, size, execute, animation, subType, color = '
           className={'button ' + type + ' ' + size + ' ' + color}
           onClick={execute}
           whileTap="pop"
-          variants={popVariant2}  
+          variants={popVariant2}
         >
           {icon}
           <p className={p + " semibold left"} > {text} </p>
@@ -53,7 +40,7 @@ const Button = ({ type, icon, text, size, execute, animation, subType, color = '
     </>
   );
 }
-const AddImgButton = ({ execute, type } : ExtendedButtonProps) => {
+const AddImgButton = ({ execute, type }: ExtendedButtonProps) => {
   return (
     <motion.button
       className={'button add ' + type + ' small'}
@@ -66,25 +53,24 @@ const AddImgButton = ({ execute, type } : ExtendedButtonProps) => {
     </motion.button>
   )
 }
-const AddPostButton = ({ execute } : BasicButtonProps) => {
+const AddPostButton = ({ execute }: BasicButtonProps) => {
   return (
     <motion.button
       className="button post small"
       whileTap="pop"
-      variants={popVariant2} 
+      variants={popVariant2}
       onClick={execute}
-      >
+    >
       <FiPlus size={16} />
       <p className="caption semibold dynamicParagraph"> Add post </p>
     </motion.button>
   )
 }
-
-const LikeButton = ({ likeCount, type, execute } : LikeButtonProps) => {
+const LikeButton = ({ likeCount, type, execute }: LikeButtonProps) => {
   return (
     <motion.button
       className={'button like ' + type + ' small'}
-      onClick={() => ( execute() )}
+      onClick={() => (execute())}
       whileTap="pop"
       variants={popVariant2}
     >
@@ -94,7 +80,7 @@ const LikeButton = ({ likeCount, type, execute } : LikeButtonProps) => {
     </motion.button>
   )
 }
-const CommentButton = ({ commentCount } : CommentButtonProps) => {
+const CommentButton = ({ commentCount }: CommentButtonProps) => {
   const [value, setValue] = useState('ghost')
   return (
     <motion.button
@@ -109,11 +95,11 @@ const CommentButton = ({ commentCount } : CommentButtonProps) => {
     </motion.button>
   )
 }
-const SaveButton = ({ type, execute } : ExtendedButtonProps) => {
+const SaveButton = ({ type, execute }: ExtendedButtonProps) => {
   return (
     <motion.button
       className={'button save ' + type + ' small'}
-      onClick={() => {execute()}}
+      onClick={() => { execute() }}
       whileTap="pop"
       variants={popVariant2}
     >
@@ -123,4 +109,4 @@ const SaveButton = ({ type, execute } : ExtendedButtonProps) => {
   )
 }
 
-export { Button, LikeButton, CommentButton, SaveButton, AddImgButton, AddPostButton }
+export { AddImgButton, AddPostButton, Button, CommentButton, LikeButton, SaveButton };

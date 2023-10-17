@@ -21,6 +21,7 @@ const userSlice = createSlice({
     followers: [],
     savedPosts: [],
     likedPosts: [],
+    subscribedTags: [],
     username: '',
     visibleNotifications: {
       comments: true,
@@ -148,6 +149,25 @@ const userSlice = createSlice({
           ]
         }
       }
+    },
+    handleFollowTag: (state, action) => {
+      if (action.payload.add) {
+        return {
+          ...state,
+          subscribedTags: [
+            ...state.subscribedTags,
+            action.payload.content
+          ]
+        }
+      } else {
+        const clonedArray = state.subscribedTags.filter((tag) => tag != action.payload.content)
+        return {
+          ...state,
+          subscribedTags: [
+            ...clonedArray
+          ]
+        }
+      }
     }
   },
 });
@@ -161,6 +181,7 @@ export const userActions = {
   handleMuteUser: userSlice.actions.handleMuteUser,
   handleBlockUser: userSlice.actions.handleBlockUser,
   handleFollow: userSlice.actions.handleFollow,
+  handleFollowTag: userSlice.actions.handleFollowTag,
 };
 
 export default userSlice.reducer;

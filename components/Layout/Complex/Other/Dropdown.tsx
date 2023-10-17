@@ -2,14 +2,16 @@
 import { RootState, actions } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 // Components
-import { NotificationTab } from "@/components/Interface/Other/Notifications";
-import { ChatsTab, MiniChatBox } from "@/components/Interface/Other/Chats";
-import { SearchTab } from "@/components/Interface/Other/Search";
+import { NotificationTab } from "@/components/Pages/Other/Notifications";
+import { ChatsTab, MiniChatBox } from "@/components/Pages/Other/Chats";
+import { SearchTab } from "@/components/Pages/Other/Search";
 // Icons
 import { FiLogOut, FiMoon, FiSettings, FiUser } from "react-icons/fi";
 // Other
 import { motion } from "framer-motion";
 import Router from 'next/router'
+// Styles
+import './OtherComps.scss'
 
 interface DropdownProps {
 }
@@ -45,10 +47,6 @@ const ProfileDropdown = () => {
         dispatch(actions.userActions.logoutUser(''));
         dispatch(actions.dropdownActions.flip(''))
         await Router.push("/")
-        setTimeout(() => {
-            window.location.reload()
-            //@ts-ignore
-        }, "500");
     }
 
     return (

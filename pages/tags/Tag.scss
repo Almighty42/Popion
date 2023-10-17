@@ -1,0 +1,73 @@
+@use "../../styles/globals";
+
+.tag-frame {
+    &__search {
+        justify-content: space-between;
+        align-items: center;
+        button {
+            height: fit-content;
+            svg {
+                color: globals.$primary-500
+            }
+        }
+    }
+    &__feed {
+        height: 100%;
+        overflow-y: scroll;
+        flex-direction: column;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        > *:not(:first-child) {
+            margin-top: 20px !important;
+        }
+        > :last-child {
+            margin-bottom: 20px;
+            width: 100%;
+            justify-content: center;
+            h6 {
+              color: globals.$primary-500;
+            }
+          }
+    }
+    &__info {
+        align-items: center;
+        h4 {
+            color: globals.$neutral-900;
+            margin-right: 16px;
+        }
+        &__type {
+            align-items: center;
+            svg,h6 {
+                color: globals.$neutral-500;
+            }
+        }
+    }
+}
+.tag {
+    @include globals.section;
+    justify-content: space-between;
+    &__title {
+        align-items: center;
+        svg,h5 {
+            color: globals.$neutral-900
+        }
+    }
+    &__actions {
+        >:not(:first-child) {
+            margin-left: 16px;
+        }
+    }
+    &__follow-info {
+        flex-direction: column;
+        align-items: center;
+        .p3 {
+            color: globals.$neutral-900
+        }
+        .caption {
+            color: globals.$neutral-400
+        }
+    }
+}

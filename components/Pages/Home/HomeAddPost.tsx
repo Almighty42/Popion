@@ -1,5 +1,5 @@
 // React
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useCallback } from "react";
 // Firebase
 import { firestore } from "@/lib/firebase";
 // Redux
@@ -10,7 +10,7 @@ import { storage } from "@/lib/firebase";
 import { AddImgButton, AddPostButton } from "../../Layout/Simple/Buttons";
 import Input from "@/components/Layout/Simple/Input";
 // Lib
-import { UserProps } from "@/lib/types";
+import { UserInfoProps } from "@/utils/interfaces";
 import { useReturnUserId, useReturnUserObject } from "@/lib/hooks";
 // Other
 import Avatar from "react-avatar";
@@ -21,53 +21,46 @@ import "cropperjs/dist/cropper.css";
 import Editor, { createEditorStateWithText } from '@draft-js-plugins/editor';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import 'draft-js/dist/Draft.css';
+import { extractHashtagsWithIndices } from '@draft-js-plugins/hashtag';
+
+import firebase from "firebase/compat/app";
+import createMentionPlugin, {
+  defaultSuggestionsFilter,
+  MentionData
+} from '@draft-js-plugins/mention';
 
 interface HomeAddPostProps {
-  userInfo: UserProps
+  userInfo: UserInfoProps
 }
 
-const users = [
+interface MentionProps {
+  mention: MentionData
+}
+
+const mentions: MentionData[] = [
   {
-    id: 'walter',
-    display: 'Walter White',
+    name: 'Trump',
+    link: 'https://twitter.com/mrussell247',
+    avatar:
+      'https://pbs.twimg.com/profile_images/517863945/mattsailing_400x400.jpg',
   },
   {
-    id: 'pipilu',
-    display: '皮皮鲁',
+    name: 'Julian Krispel-Samsel',
+    link: 'https://twitter.com/juliandoesstuff',
+    avatar: 'https://avatars2.githubusercontent.com/u/1188186?v=3&s=400',
   },
   {
-    id: 'luxixi',
-    display: '鲁西西',
+    name: 'Alex Jones',
+    link: 'https://twitter.com/juliandoesstuff',
+    avatar: 'https://avatars2.githubusercontent.com/u/1188186?v=3&s=400',
   },
-  {
-    id: 'satoshi1',
-    display: '中本聪',
-  },
-  {
-    id: 'satoshi2',
-    display: 'サトシ・ナカモト',
-  },
-  {
-    id: 'nobi',
-    display: '野比のび太',
-  },
-  {
-    id: 'sung',
-    display: '성덕선',
-  },
-  {
-    id: 'jesse',
-    display: 'Jesse Pinkman',
-  },
-  {
-    id: 'gus',
-    display: 'Gustavo "Gus" Fring',
-  },
-  {
-    id: 'saul',
-    display: 'Saul Goodman'}]
+]
 
 const HomeAddPost = ({ userInfo }: HomeAddPostProps) => {
+
+  // TODO - Cleanup code
+  // TODO - Users are able to add 2 of the same posts if they press the add button quickly enough, fix that
+
   const [content, setContent] = useState('')
   const [check, setCheck] = useState(false)
   const [compare, setCompare] = useState()
@@ -83,6 +76,21 @@ const HomeAddPost = ({ userInfo }: HomeAddPostProps) => {
       toast.error("Post cannot be empty")
     } else {
       const postId = uniqid()
+
+      const hashtags = extractHashtagsWithIndices(editorState.getCurrentContent().getPlainText('\u0001'))
+        .map((item) => {
+          firestore.doc(`tags/${item.hashtag}`).get().then((doc) => {
+            if (doc.exists) {
+              const hashtagObject = doc.data()
+              firestore.doc(`tags/${item.hashtag}`).update({ postsNum: hashtagObject?.postsNum + 1, posts: firebase.firestore.FieldValue.arrayUnion(postId) })
+            } else if (!doc.exists) {
+              const tagId = uniqid('tag-')
+              firestore.doc(`tags/${item.hashtag}`).set({ id: tagId, postsNum: 1, subscribersNum: 0, posts: [postId] })
+            }
+          })
+          return item.hashtag
+        })
+
       const userId = await useReturnUserId({ username: userInfo.username })
       const userData = await useReturnUserObject({ userId })
       const postData = {
@@ -101,8 +109,10 @@ const HomeAddPost = ({ userInfo }: HomeAddPostProps) => {
         mute: false,
         block: false,
         ownerId: userId,
-        image: imageInfo.imageOn
+        image: imageInfo.imageOn,
+        tags: [...hashtags]
       }
+
       if (imageInfo.imageOn) {
         var metadata = {
           customMetadata: {
@@ -167,24 +177,48 @@ const HomeAddPost = ({ userInfo }: HomeAddPostProps) => {
     window.addEventListener('focus', handleFocusBack)
   }
 
-  // * Trying to implement @mention functionality... ( Jesus christ )
+  // * Trying to implement #hashtag functionality...
+
+  const [suggestions, setSuggestions] = useState(mentions);
+  const [open, setOpen] = useState(false);
 
   const [editorState, setEditorState] = useState(
-     createEditorStateWithText('')
+    createEditorStateWithText('')
   );
 
-  console.log(editorState.getCurrentContent().getPlainText('\u0001'))
+  const { MentionSuggestions, plugins } = useMemo(() => {
+    const mentionPlugin = createMentionPlugin({
+      mentionPrefix: '#',
+      mentionTrigger: ['#']
+    })
+    const hashtagPlugin = createHashtagPlugin();
+    const { MentionSuggestions } = mentionPlugin
+    const plugins = [mentionPlugin]
+    return { plugins, MentionSuggestions };
+  }, [])
 
-  const hashtagPlugin = createHashtagPlugin();
+  const onOpenChange = useCallback((_open: boolean) => {
+    setOpen(_open);
+  }, []);
+  const onSearchChange = useCallback(({ value }: { value: string }) => {
+    setSuggestions(defaultSuggestionsFilter(value, mentions));
+  }, []);
 
   return (
     <div className="addpost">
       <Avatar size="40" round />
       <Editor
-      editorState={editorState}
-      onChange={setEditorState}
-      plugins={[hashtagPlugin]}
-      placeholder="What's happening?"
+        editorState={editorState}
+        onChange={setEditorState}
+        plugins={plugins}
+        placeholder="What's happening?"
+        editorKey="editor"
+      />
+      <MentionSuggestions
+        open={open}
+        onOpenChange={onOpenChange}
+        suggestions={suggestions}
+        onSearchChange={onSearchChange}
       />
       <AddImgButton
         type={imageInfo.imageOn ? 'primary' : 'ghost'}
@@ -197,19 +231,9 @@ const HomeAddPost = ({ userInfo }: HomeAddPostProps) => {
         onChange={(e: any) => { handleFileUpload(e) }}
         onClick={clickedFileInput}
         disabled={check}
-        />
+      />
     </div>
   );
 }
-
-
-{/* <Input
-  text="What's happening?"
-  size="small"
-  type="text"
-  border="uncolored"
-  value={content}
-  onChange={(e: any) => setContent(e.target.value)}
-  textarea /> */}
 
 export default HomeAddPost;

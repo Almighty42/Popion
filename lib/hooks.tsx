@@ -1,12 +1,15 @@
 import { firestore, postToJSON } from "@/lib/firebase";
 import { Dispatch, SetStateAction, useState } from "react";
-import { PostProps, UseStateString, UserProps } from "@/lib/types"
+import { UserInfoProps, PostCompProps } from "@/utils/interfaces"
 import firebase from "firebase/compat/app";
 import { useDispatch } from "react-redux";
 import { actions } from "@/redux/store";
 
 interface returnUserIdProps {
     username: string
+}
+interface useReturnTagObject {
+    tag: string
 }
 interface returnPostObjectProps {
     userId: string,
@@ -42,7 +45,7 @@ interface editPostProps {
 }
 interface useFollowUserProps {
     add: boolean,
-    userInfo: UserProps,
+    userInfo: UserInfoProps,
     userId: string | undefined, 
     setToggle: Dispatch<SetStateAction<boolean>>,
     dispatch: any,
@@ -50,15 +53,25 @@ interface useFollowUserProps {
     followersNum: number,
     followingNum: number,
     targetName: string,
-    targetUsername: string,
-    state: boolean,
+    targetUsername: string
     setFollowersCount: Dispatch<SetStateAction<number>>,
     setFollowingCount: Dispatch<SetStateAction<number>>
+}
+interface useFollowTagProps {
+    dispatch: any,
+    state: boolean,
+    tagName: string,
+    userId: string
 }
 
 export const useReturnUserId = async ({ username }: returnUserIdProps) => {
     const userId = (await firestore.doc(`usernames/${username}`).get()).data()?.uid
     return userId
+}
+
+export const useReturnTagObject = async ({ tag } : useReturnTagObject) => {
+    const tagObject = (await firestore.doc(`tags/${tag}`).get()).data()
+    return tagObject
 }
 
 export const useReturnPostObject = async ({ userId, postId }: returnPostObjectProps) => {
@@ -71,7 +84,7 @@ export const useReturnUserObject = async ({ userId }: returnUserObject) => {
     return userObject
 }
 
-export const useReturnFilterPosts = async ({ type, userId }: returnFilterPosts): Promise<Array<PostProps>> => {
+export const useReturnFilterPosts = async ({ type, userId }: returnFilterPosts): Promise<Array<PostCompProps>> => {
     if (type == 'Posts') {
         const postsQuery = firestore.collectionGroup("posts").where("userId", "==", userId).limit(10)
         const posts = (await postsQuery.get()).docs.map(postToJSON);
@@ -115,7 +128,22 @@ export const useReturnFilterPosts = async ({ type, userId }: returnFilterPosts):
             ...resolvedPosts
         ]
     } else if (type == 'Tags') {
-        return []
+        const userRef = (await firestore.doc(`users/${userId}`).get()).data()
+        const userTags = userRef?.subscribedTags
+        const posts : Array<any> = userTags.map(async (tag: string) => {
+            const postsWithTag = (await firestore.collectionGroup("posts").where("tags", "array-contains", tag).get()).docs.map(postToJSON)
+            return [
+                ...postsWithTag
+            ]
+        })
+
+        const resolvedPosts = await Promise.all(posts.map(async (array) => {
+            return array
+        }))
+
+        return [
+            ...resolvedPosts[0]
+        ]
     } else {
         return []
     }
@@ -153,7 +181,7 @@ export const useEditPost = async ({ userId, postId, content }: editPostProps) =>
     firestore.doc(`users/${userId}/posts/${postId}`).update({ content })
 }
 
-export const useFollowUser = async ({ add, userInfo, dispatch, userId, setToggle, followingNum, followersNum, targetName, targetUsername, state, setFollowersCount, setFollowingCount }: useFollowUserProps) => {
+export const useFollowUser = async ({ add, userInfo, dispatch, userId, setToggle, followingNum, followersNum, targetName, targetUsername, setFollowersCount, setFollowingCount }: useFollowUserProps) => {
 
     
     const currentUserId = await useReturnUserId({ username: userInfo.username })
@@ -189,4 +217,14 @@ export const useFollowUser = async ({ add, userInfo, dispatch, userId, setToggle
             firestore.doc(`users/${currentUserId}/following/${userId}`).delete()
 
         }
+}
+
+export const useFollowTag = ({ dispatch, state, tagName, userId } : useFollowTagProps) => {
+    if (state) {
+        dispatch(actions.userActions.handleFollowTag({ add: false, content: tagName }))
+        firestore.doc(`users/${userId}`).update({ subscribedTags: firebase.firestore.FieldValue.arrayRemove(tagName) })
+    } else {
+        dispatch(actions.userActions.handleFollowTag({ add: true, content: tagName }))
+        firestore.doc(`users/${userId}`).update({ subscribedTags: firebase.firestore.FieldValue.arrayUnion(tagName) })
+    }
 }

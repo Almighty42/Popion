@@ -5,7 +5,7 @@ import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 // Components
 import Navbar from "@/components/Layout/Complex/Navbar";
-import Comment from "@/components/Interface/Other/Comment";
+import Comment from "@/components/Pages/Other/Comment";
 import Input from "@/components/Layout/Simple/Input";
 import { Button, CommentButton, LikeButton, SaveButton } from "@/components/Layout/Simple/Buttons";
 // Icons

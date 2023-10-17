@@ -1,0 +1,90 @@
+@use "../../../../styles/globals";
+
+.navbar {
+    align-items: center;
+    justify-content: space-between;
+    &__left {
+        align-items: center;
+        &__header {
+            user-select: none;
+            span {
+                color: globals.$primary-500;
+            }
+            margin-right: 20px;
+            @media (max-width: globals.$breakpointW-DesktopXL) or (max-height: globals.$breakpointH-DesktopXL) {
+                font-size: 28px;
+                line-height: 32px;
+            }
+        }
+        &__actions {
+            padding: 0;
+            margin-top: 4px;
+            &-selected {
+                border-bottom: 2px solid globals.$primary-500;
+            }
+            @media (max-width: globals.$breakpointW-Tablet) or (max-height: globals.$breakpointH-Desktop) {
+                display: none;
+            }
+        }
+        &__item {
+            display: flex;
+            margin: 4px 8px 0 8px;
+            cursor: pointer;
+            p {
+                margin-left: 10px;
+                color: globals.$primary-500;
+            }
+            svg {
+                stroke: globals.$primary-500;
+            }
+        }
+    }
+    &__right {
+        align-items: center;
+        // * If Logged in
+        ul {
+            .dynamicButton {
+                margin-right: 28px;
+                @media (max-width: globals.$breakpointW-Tablet) or (max-height: globals.$breakpointH-Desktop) {
+                    margin-right: 8px;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+                cursor: pointer;
+                svg {
+                    stroke: globals.$primary-500;
+                }
+                &.clicked {
+                    svg {
+                        fill: globals.$primary-500;
+                    }
+                }
+            }
+        }
+        &__profilebutton {
+            align-items: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+            p {
+                margin: 0 8px;
+                user-select: none;
+            }
+            @media (max-width: globals.$breakpointW-Tablet) or (max-height: globals.$breakpointH-Desktop) {
+                display: none;
+            }
+        }
+        // * If Logged out
+        .button {
+            &:first-child {
+                margin-right: 12px;
+            }
+            p {
+                @media (max-width: globals.$breakpointW-Tablet) or (max-height: globals.$breakpointH-Desktop) {
+                    display: none;
+                }
+            }
+        }
+    }
+}

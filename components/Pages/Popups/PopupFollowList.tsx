@@ -15,24 +15,24 @@ import { motion } from "framer-motion";
 import Avatar from 'react-avatar';
 import { animationOptions, popInVariant1 } from '@/lib/animations';
 import { firestore, postToJSON } from '@/lib/firebase';
-import { UserProps } from '@/lib/types';
+import { UserInfoProps } from '@/utils/interfaces';
 import { useRouter } from 'next/router';
 
 interface PopupFollowListProps {
   userId: string | undefined,
-  userObject: UserProps | undefined,
-  setLoading: Dispatch<SetStateAction<boolean>>
+  userObject: UserInfoProps | undefined,
+  setLoading?: Dispatch<SetStateAction<boolean>>
 }
 interface ListItemProps {
   name: string,
   username: string,
   userId: string | undefined,
-  userInfo: UserProps,
+  userInfo: UserInfoProps,
   followersNum: number,
   followingNum: number,
   followState: boolean,
   isOwner: boolean,
-  setLoading: Dispatch<SetStateAction<boolean>>,
+  setLoading?: Dispatch<SetStateAction<boolean>>,
   loggedIn: boolean,
   blocked: boolean
 }
@@ -181,8 +181,6 @@ const ListItem = ({ name, username, followersNum, followingNum, followState, use
     }
   }, [])
 
-  console.log(blocked)
-
   return (
     <li className='popupshare__item popupshare__item-follow' >
       <Avatar size='32' round />
@@ -222,7 +220,6 @@ const ListItem = ({ name, username, followersNum, followingNum, followState, use
                           followingNum: followingCount,
                           targetName: name,
                           targetUsername: username,
-                          state: check1,
                           setFollowersCount,
                           setFollowingCount
                         });
@@ -245,7 +242,6 @@ const ListItem = ({ name, username, followersNum, followingNum, followState, use
                           followingNum: followingCount,
                           targetName: name,
                           targetUsername: username,
-                          state: check2,
                           setFollowersCount,
                           setFollowingCount
                         });
@@ -265,7 +261,12 @@ const ListItem = ({ name, username, followersNum, followingNum, followState, use
         icon={<FiCompass size={16} />}
         size='small'
         text='Open profile'
-        execute={async () => { setLoading(true); await router.push(`/users/${username}`); window.location.reload() }}
+        execute={async () => { 
+        //@ts-ignore
+        setLoading(true) 
+        await router.push(`/users/${username}`) 
+        window.location.reload() 
+      }}
       />
     </li>
   )

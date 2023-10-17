@@ -18,7 +18,6 @@ import { popInVariant1, animationOptions } from "@/lib/animations";
 // TODO ---> Connect component to firestore and setup search functionality
 // TODO ---> Cleanup code
 
-// Interface
 interface SearchItemProps {
     type: 'tag' | 'user' | 'post',
     text: string,

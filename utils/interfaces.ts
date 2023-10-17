@@ -1,6 +1,4 @@
-import { Dispatch } from "react"
-
-interface UserProps {
+interface UserInfoProps {
     avatarURL: string,
     bannedUsers: Array<string>,
     description: string,
@@ -31,44 +29,28 @@ interface UserProps {
       posts: boolean
     },
     loggedIn: boolean
-}
+  }
 
-interface PostProps {
-  block: boolean,
-commentCount: number
-comments: Array<string>
-content: string,
-createdAt: string,
-image: boolean,
-likeCount: number,
-likes: Array<string>,
-mute: boolean,
-name: string,
-ownerId: string,
-postId: string,
-published: boolean,
-updatedAt: string
-userId: string
-username: string
-}
-
-interface UseStateString {
-  state: string,
-  setState: Dispatch<React.SetStateAction<string>>
-}
-
-interface UseStateNumber {
-
-}
-
-interface UseStateBoolean {
-
+interface PostCompProps {
+    block: boolean,
+    commentCount: number
+    comments: Array<string>
+    content: string,
+    createdAt: string,
+    image: boolean,
+    likeCount: number,
+    likes: Array<string>,
+    mute: boolean,
+    name: string,
+    ownerId: string,
+    postId: string,
+    published: boolean,
+    updatedAt: string
+    userId: string
+    username: string 
 }
 
 export type { 
-  UserProps,
-  UseStateString,
-  UseStateNumber,
-  UseStateBoolean,
-  PostProps
+    UserInfoProps,
+    PostCompProps
 }

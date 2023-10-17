@@ -1,17 +1,23 @@
 // React
-import { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 // Firebase
 import { firestore, postToJSON } from '@/lib/firebase';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, actions } from '@/redux/store';
 // Components
-import { HomeAddPost, HomeOnlineBlock, HomeProfileBlock, HomeTagsBlock } from '@/components/Interface/Home';
+import { HomeAddPost, HomeOnlineBlock, HomeProfileBlock, HomeTagsBlock } from '@/components/Pages/Home';
 import { Post, Navbar, ModalBlock } from "@/components/Layout/Complex"
-import { SearchHeader, TagBlock, UserBlock } from '@/components/Interface/Other/Search'
+import { SearchHeader, TagBlock, UserBlock } from '@/components/Pages/Other/Search'
 // Other
-import { useMediaQuery } from 'react-responsive';
 import ReactLoading from 'react-loading';
+
+import { NestedLayout, withNestedLayout } from './Layout';
+import { returnPosts } from '@/components/Layout/Complex/Post/ReturnPosts';
+
+interface HomeProps {
+    data: any
+}
 
 export async function getServerSideProps() {
     const postsQuery = firestore
@@ -23,60 +29,53 @@ export async function getServerSideProps() {
     const posts = (await postsQuery.get()).docs.map(postToJSON);
 
     return {
-        props: { posts }
-    };
+        props: { data: posts }
+    }
 }
 
-export default function Home(props: any) {
+const Home = ({ data } : HomeProps) => {
+
     const dispatch = useDispatch()
-    const [posts, setPosts] = useState(props.posts)
-    const [loadingPosts, setLoadingPosts] = useState(false)
 
-    const isMinW = useMediaQuery({ query: '(max-width: 1151px)' })
-    const isMinH = useMediaQuery({ query: '(max-height: 599px)' })
-    const isMin = isMinW || isMinH ? true : false
+    const [posts, setPosts] = useState(data)
+    const [loadingPosts, setLoadingPosts] = useState(true)
 
-    const [checkMin, setCheckMin] = useState(isMin)
-
-    const modalInfo = useSelector((state: RootState) => state.modal);
-    const feedInfo = useSelector((state: RootState) => state.feed)
     const userInfo = useSelector((state: RootState) => state.user)
     const postsInfo = useSelector((state: RootState) => state.post)
 
     useEffect(() => {
-        setCheckMin(isMin)
-    }, [isMin])
-    useEffect(() => {
+        dispatch(actions.modalActions.setLoadingState(true))
         dispatch(actions.navbarActions.changeNavbarState("home"))
-        setLoadingPosts(true)
         dispatch(actions.postActions.fetchPosts(posts))
+        dispatch(actions.modalActions.setLoadingState(false))
         setLoadingPosts(false)
     }, [])
-
-    const returnPosts = (refresh : boolean) => {
-        return refresh ? '' : postsInfo.posts.map((post: any) => (
-            <>
-                <Post
-                    name={post.name}
-                    username={post.username}
-                    content={post.content}
-                    createdAt={post.createdAt}
-                    likeCount={post.likeCount}
-                    commentCount={post.commentCount}
-                    postId={post.postId}
-                    userInfo={userInfo}
-                    mute={post.mute}
-                    block={post.block}
-                    ownerId={post.ownerId}
-                    image={post.image}
-                    setLoadingPosts={setLoadingPosts}
-                />
-            </>
-        ))
-    }
+    
 
     return (
-        <>
+        <>  
+            {userInfo.loggedIn && <HomeAddPost userInfo={userInfo} />}
+            <div className="frame__feed">
+                {loadingPosts ? 
+                returnPosts({ postsInfo, refresh: true, userInfo, setLoadingPosts }) : 
+                returnPosts({ postsInfo, refresh: false, userInfo, setLoadingPosts })}
+                <button>
+                    <h6 className='semibold'> Show more </h6>
+                </button>
+            </div>
+        </>
+    )
+}
+
+Home.getLayout = function getLayout(page: ReactElement) {
+    return <NestedLayout> {page} </NestedLayout>
+}
+
+export default withNestedLayout(Home)
+
+
+/* 
+<>
             <ModalBlock isMin={isMin} modalInfo={modalInfo} setLoading={setLoadingPosts} />
             <div className='frame' >
                 <Navbar loggedIn={userInfo.loggedIn} />
@@ -126,7 +125,6 @@ export default function Home(props: any) {
                         <div className="frame__side">
                             <HomeTagsBlock loggedIn={userInfo.loggedIn} />
                         </div>
-                        {/* <Profile /> */}
                     </div>
                 ) : (
                     <div className='frame__loading'>
@@ -134,6 +132,54 @@ export default function Home(props: any) {
                     </div>
                 )}
             </div >
-        </>
-    );
-}
+        </> 
+        
+        
+        const dispatch = useDispatch()
+    const [posts, setPosts] = useState(props.posts)
+    const [loadingPosts, setLoadingPosts] = useState(false)
+
+    const isMinW = useMediaQuery({ query: '(max-width: 1151px)' })
+    const isMinH = useMediaQuery({ query: '(max-height: 599px)' })
+    const isMin = isMinW || isMinH ? true : false
+
+    const [checkMin, setCheckMin] = useState(isMin)
+
+    const modalInfo = useSelector((state: RootState) => state.modal);
+    const feedInfo = useSelector((state: RootState) => state.feed)
+    const userInfo = useSelector((state: RootState) => state.user)
+    const postsInfo = useSelector((state: RootState) => state.post)
+
+    useEffect(() => {
+        setCheckMin(isMin)
+    }, [isMin])
+    useEffect(() => {
+        dispatch(actions.navbarActions.changeNavbarState("home"))
+        setLoadingPosts(true)
+        dispatch(actions.postActions.fetchPosts(posts))
+        setLoadingPosts(false)
+    }, [])
+
+    const returnPosts = (refresh: boolean) => {
+        return refresh ? '' : postsInfo.posts.map((post: any) => (
+            <>
+                <Post
+                    name={post.name}
+                    username={post.username}
+                    content={post.content}
+                    createdAt={post.createdAt}
+                    likeCount={post.likeCount}
+                    commentCount={post.commentCount}
+                    postId={post.postId}
+                    userInfo={userInfo}
+                    mute={post.mute}
+                    block={post.block}
+                    ownerId={post.ownerId}
+                    image={post.image}
+                    setLoadingPosts={setLoadingPosts}
+                />
+            </>
+        ))
+    }
+
+*/

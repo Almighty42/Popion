@@ -8,7 +8,8 @@ const modalSlice = createSlice({
     show: false,
     window: '',
     userId: '',
-    type: ''
+    type: '',
+    loading: false
   },
   reducers: {
     turnOn: (state, action) => {
@@ -24,10 +25,17 @@ const modalSlice = createSlice({
     },
     turnOnPassProps: (state, action) => {
       return {
+        ...state,
         show: true,
         window: action.payload.window,
         userId: action.payload.userId,
         type: action.payload.type
+      }
+    },
+    setLoadingState: (state, action) => {
+      return {
+        ...state,
+        loading: action.payload
       }
     }
   },
@@ -38,6 +46,7 @@ export const modalActions = {
     turnOff: modalSlice.actions.turnOff,
     windowChange: modalSlice.actions.windowChange,
     turnOnPassProps: modalSlice.actions.turnOnPassProps,
+    setLoadingState: modalSlice.actions.setLoadingState,
 };
 
 export default modalSlice.reducer;
