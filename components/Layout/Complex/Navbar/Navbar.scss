@@ -22,7 +22,7 @@
             &-selected {
                 border-bottom: 2px solid globals.$primary-500;
             }
-            @media (max-width: globals.$breakpointW-Tablet) or (max-height: globals.$breakpointH-Desktop) {
+            @media (max-width: globals.$breakpointW-Mobile) {
                 display: none;
             }
         }
@@ -71,7 +71,7 @@
                 margin: 0 8px;
                 user-select: none;
             }
-            @media (max-width: globals.$breakpointW-Tablet) or (max-height: globals.$breakpointH-Desktop) {
+            @media (max-width: globals.$breakpointW-Mobile) {
                 display: none;
             }
         }

@@ -26,7 +26,6 @@ const PostDropdown = ( props : PostDropdownProps) => {
     }
     const handleOpenProfile = () => {
         router.push(`/users/${props.ownerUsername}`)
-        window.location.reload()
     }
     const handleCopyText = () => {
         navigator.clipboard.writeText(props.content)
@@ -76,7 +75,14 @@ const PostDropdown = ( props : PostDropdownProps) => {
             await firestore.doc(`tags/${tag}`).update({ postsNum: tagInfo?.postsNum - 1, posts: firebase.firestore.FieldValue.arrayRemove(props.postId) })
         })
         firestore.doc(`users/${userId}/posts/${props.postId}`).delete()
+        firestore.doc(`users/${userId}/savedPosts/${props.postId}`).delete()
         dispatch(actions.postActions.handleDelete(props.postId))
+        console.log(props.postId)
+        if (props.currentUserOwner) {
+            dispatch(actions.userActions.handleSavePost({ content: props.postId, add: false }))
+            usePostAlterArray({ add: false, docId: props.postId, type: 'savedPosts', userId })
+        }
+        
         if (props.imageValue) {
             var image = storage.ref(`images/${props.postId}`)
             image.delete()
@@ -91,8 +97,8 @@ const PostDropdown = ( props : PostDropdownProps) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
         >
-            <PostDropdownItem type="Show post" handleFunction={handleShowPost} setState={props.setState} muteState={props.mute} blockState={props.block} />
-            <hr />
+            {/* <PostDropdownItem type="Show post" handleFunction={handleShowPost} setState={props.setState} muteState={props.mute} blockState={props.block} />
+            <hr /> */}
             {props.currentUserOwner ?
                 <PostDropdownItem type="Edit post" handleFunction={handleEditPost} setState={props.setState} muteState={props.mute} blockState={props.block} /> :
                 <PostDropdownItem type="Open profile" handleFunction={handleOpenProfile} setState={props.setState} muteState={props.mute} blockState={props.block} />
@@ -113,8 +119,8 @@ const PostDropdown = ( props : PostDropdownProps) => {
                             <PostDropdownItem type="Block user" handleFunction={handleBlockUser} setState={props.setState} muteState={props.mute} blockState={props.block} />
                         </>
                     }
-                    <hr />
-                    <PostDropdownItem type="Share post" handleFunction={handleSharePost} setState={props.setState} muteState={props.mute} blockState={props.block} />
+                    {/* <hr />
+                    <PostDropdownItem type="Share post" handleFunction={handleSharePost} setState={props.setState} muteState={props.mute} blockState={props.block} /> */}
                     {props.currentUserOwner &&
                         <>
                             <hr />

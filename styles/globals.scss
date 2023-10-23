@@ -91,9 +91,9 @@ $breakpointW-DesktopXL: 1439px;
 $breakpointH-DesktopXL: 899px;
 $breakpointW-Desktop: 1151px;
 $breakpointH-Desktop: 599px;
-$breakpointW-Tablet: 768px;
+$breakpointW-Tablet: 960px;
 $breakpointH-Tablet: 1024px;
-$breakpointW-Mobile: 400px;
+$breakpointW-Mobile: 700px;
 $breakpointH-Mobile: 568px;
 
 @media (min-width: $breakpointW-DesktopXL) or (min-height: $breakpointH-DesktopXL) {
@@ -111,7 +111,6 @@ $breakpointH-Mobile: 568px;
   .frame__center {
     margin: 0 20px;
     height: calc(100vh - 72px);
-    //width: calc(100vw - 658px);
   }
 }
 @media (max-width: $breakpointW-DesktopXL) or (max-height: $breakpointH-DesktopXL) {
@@ -129,7 +128,6 @@ $breakpointH-Mobile: 568px;
   .frame__center {
     margin: 0 16px;
     height: calc(100vh - 72px);
-    //width: calc(100vw - 520px);
   }
 }
 @media (max-width: $breakpointW-Desktop) or (max-height: $breakpointH-Desktop) {
@@ -145,10 +143,8 @@ $breakpointH-Mobile: 568px;
     padding: 0 16px;
   }
   .frame__center {
-    margin-left: 8px;
-    margin-right: 0;
+    margin: 0 16px;
     height: calc(100vh - 72px);
-    //width: calc(100vw - 254px);
   }
 }
 @media (max-width: $breakpointW-Tablet) or (max-height: $breakpointH-Desktop) {
@@ -160,7 +156,7 @@ $breakpointH-Mobile: 568px;
     padding: 0 16px;
   }
   .frame__center {
-    margin: 0;
+    margin-left: 16px;
     height: calc(100vh - 72px);
     .addPost {
       display: none;
@@ -168,9 +164,18 @@ $breakpointH-Mobile: 568px;
   }
   .frame__side {
     display: none;
+    &__left {
+      display: flex;
+    }
   }
 }
 @media (max-width: $breakpointW-Mobile) {
+  .frame__center {
+    margin: 0
+  }
+  .frame__side {
+    display: none;
+  }
   .navbar {
     height: 72px;
     padding: 0 16px;

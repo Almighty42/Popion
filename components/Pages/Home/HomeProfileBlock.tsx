@@ -7,6 +7,7 @@ import { Button } from '@/components/Layout/Simple/Buttons';
 import { FiLogIn, FiUser } from 'react-icons/fi';
 // Other
 import Avatar from 'react-avatar';
+import { useRouter } from 'next/router';
 
 // TODO ---> Connect component to firestore and implement functionality
 // TODO ---> Cleanup code
@@ -15,6 +16,8 @@ const HomeProfileBlock = ({ loggedIn }: { loggedIn: boolean }) => {
     const dispatch = useDispatch()
 
     const userInfo = useSelector((state: RootState) => state.user)
+
+    const router = useRouter()
 
     return loggedIn ? (
         <div className="profileblock profileblock-loggedin" >
@@ -36,7 +39,7 @@ const HomeProfileBlock = ({ loggedIn }: { loggedIn: boolean }) => {
                     <p className='p1' > Followers </p>
                 </div>
             </div>
-            <button className='profileblock__button' >
+            <button onClick={() => { router.push(`/users/${userInfo.username}`) }} className='profileblock__button' >
                 <p className='p2 semibold' > My Profile </p>
             </button>
         </div>

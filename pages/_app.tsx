@@ -16,7 +16,8 @@ import '@/components/Pages/Popups/Popups.scss'
 import '@/components/Layout/Simple/Simple.scss'
 import '@/components/Pages/Other/Other.scss'
 import '@/pages/tags/Tag.scss'
-import { Layout } from './Layout';
+import { Layout } from '@/components/Layout/Layout';
+import Head from 'next/head';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -29,15 +30,12 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   // TODO   Implement when blocking someone, that it automaticaly unfollows them
-  // TODO   Implement ROOT layout
   // TODO   SEO
   // TODO   Posts show more button
   // TODO   Followers/Followings show more button
   // TODO   Remove @tscheck-ignore from entire project ( Wherever possible)
   // TODO   Make it obvious that there are more posts to scroll over
   // TODO   When logging out and logging back in posts are ( possibly ) not re-rendered which leads to user being able to edit post which isnt his
-
-  // TODO   Navbar - when clicking return to last page button ( possibily to next page as well ) selected item in navbar stays the same
   // TODO   When clicking one of those items, it should trigger loading state on the current page
 
   // TODO Implement createdAt functionality for posts
@@ -51,13 +49,18 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor} >
-        <Layout>
-          {getLayout(<Component {...pageProps} />)}
-        </Layout>
-        <Toaster />
-      </PersistGate>
+    <>
+    <Head>
+    <title>Popion</title>
+    </Head>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor} >
+          <Layout>
+            {getLayout(<Component {...pageProps} />)}
+          </Layout>
+          <Toaster />
+        </PersistGate>
     </Provider>
+    </>
   );
 }

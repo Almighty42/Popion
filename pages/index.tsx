@@ -12,19 +12,16 @@ import { SearchHeader, TagBlock, UserBlock } from '@/components/Pages/Other/Sear
 // Other
 import ReactLoading from 'react-loading';
 
-import { NestedLayout, withNestedLayout } from './Layout';
+import { NestedLayout, withNestedLayout } from '@/components/Layout/Layout';
 import { returnPosts } from '@/components/Layout/Complex/Post/ReturnPosts';
+import { useReturnUserId } from '@/lib/hooks';
 
 interface HomeProps {
     data: any
 }
 
-export async function getServerSideProps() {
-    const postsQuery = firestore
-        .collectionGroup('posts')
-        .where('published', '==', true)
-        .orderBy('createdAt', 'desc')
-        .limit(10);
+export async function getStaticProps() {
+    const postsQuery = firestore.collectionGroup('posts').where('published', '==', true).orderBy('createdAt', 'desc')
 
     const posts = (await postsQuery.get()).docs.map(postToJSON);
 
@@ -44,11 +41,27 @@ const Home = ({ data } : HomeProps) => {
     const postsInfo = useSelector((state: RootState) => state.post)
 
     useEffect(() => {
-        dispatch(actions.modalActions.setLoadingState(true))
-        dispatch(actions.navbarActions.changeNavbarState("home"))
-        dispatch(actions.postActions.fetchPosts(posts))
-        dispatch(actions.modalActions.setLoadingState(false))
-        setLoadingPosts(false)
+        const fetch = async () => {
+            if (userInfo.username.length > 0) {
+                const userId = await useReturnUserId({ username: userInfo.username })
+                const savedPostsRef = (await firestore.doc(`users/${userId}`).collection("savedPosts").get()).docs.map(postToJSON)
+                const savedPosts = savedPostsRef.map((post) => {
+                    return post.postId
+                })
+                const likedPostsRef = (await firestore.doc(`users/${userId}`).collection("likedPosts").get()).docs.map(postToJSON)
+                const likedPosts = likedPostsRef.map((post) => {
+                    return post.postId
+                })
+                console.log(savedPosts)
+                dispatch(actions.userActions.handlePullPosts({ savedPosts, likedPosts }))
+            }
+            setLoadingPosts(false)
+            dispatch(actions.navbarActions.changeNavbarState("home"))
+            dispatch(actions.postActions.fetchPosts(posts))
+        }
+        
+        fetch()
+
     }, [])
     
 
@@ -59,9 +72,9 @@ const Home = ({ data } : HomeProps) => {
                 {loadingPosts ? 
                 returnPosts({ postsInfo, refresh: true, userInfo, setLoadingPosts }) : 
                 returnPosts({ postsInfo, refresh: false, userInfo, setLoadingPosts })}
-                <button>
+                {/* <button>
                     <h6 className='semibold'> Show more </h6>
-                </button>
+                </button> */}
             </div>
         </>
     )

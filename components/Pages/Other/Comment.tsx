@@ -7,11 +7,11 @@ import Avatar from "react-avatar"
 // Icons
 import { FiChevronDown, FiChevronUp, FiMessageCircle, FiMoreVertical } from "react-icons/fi";
 // Types
-import { UserProps } from "@/lib/types";
+import { UserInfoProps } from "@/utils/interfaces";
 
 interface CommentProps {
     step: 0 | 1 | 2 | 3;
-    userInfo: UserProps
+    userInfo: UserInfoProps
 }
 
 // TODO ---> Cleanup code

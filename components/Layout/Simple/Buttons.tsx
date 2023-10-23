@@ -17,22 +17,24 @@ const Button = ({
   execute,
   animation,
   subType,
-  color = 'standard'
+  color = 'standard',
+  border = 'border-present'
 }: ButtonProps) => {
   const p = size == 'small' ? 'caption' : size == 'large' ? 'p2' : 'p1'
   return (
     <>
       {animation ?
         <motion.button
-          className={'button ' + type + ' ' + size + ' ' + color}
+          className={`button ${type} ${size} ${color} ${border}`}
           onClick={execute}
           whileTap="pop"
           variants={popVariant2}
+          type={subType}
         >
           {icon}
           <p className={p + " semibold left"} > {text} </p>
         </motion.button> :
-        <button className={'button ' + type + ' ' + size + ' ' + color} onClick={execute} type={subType} >
+        <button className={`button ${type} ${size} ${color} ${border}`} onClick={execute} type={subType} >
           {icon}
           <p className={p + " semibold left"} > {text} </p>
         </button>

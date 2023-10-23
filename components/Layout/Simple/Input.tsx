@@ -13,7 +13,8 @@ const Input = ({
   value, 
   onChange, 
   required = false, 
-  textarea = false 
+  textarea = false,
+  inputRef
 }: InputProps) => {
   return (
     <>
@@ -26,7 +27,7 @@ const Input = ({
         :
         <div className={'input ' + size + ' ' + border} >
           {iconSide == 'left' && icon}
-          <input type={type} placeholder={text} value={value} onChange={onChange} required={required} />
+          <input ref={inputRef} type={type} placeholder={text} value={value} onChange={onChange} required={required} />
           {iconSide == 'right' && icon}
         </div>
       }

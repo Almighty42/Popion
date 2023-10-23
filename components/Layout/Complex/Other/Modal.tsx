@@ -25,6 +25,7 @@ interface ModalBlockProps {
 }
 
 const ModalBlock = ({ modalInfo, isMin, userId, userObject, setLoading }: ModalBlockProps) => {
+
     return (
         <Modal
             className="modal"

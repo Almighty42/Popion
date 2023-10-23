@@ -3,6 +3,16 @@
 .modal {
     position: absolute;
     width: 100%;
+    box-sizing: border-box;
+    @media (min-width: globals.$breakpointW-DesktopXL) or (min-height: globals.$breakpointH-DesktopXL) {
+        padding: 0 381px;
+    }
+    @media (max-width: globals.$breakpointW-DesktopXL) or (max-height: globals.$breakpointH-DesktopXL) {
+        padding: 0 308px;
+    }
+    @media (max-width: globals.$breakpointW-Desktop) or (max-height: 740px) {
+        padding: 0;
+    }
     height: 100vh;
     z-index: 1;
     top: 0;

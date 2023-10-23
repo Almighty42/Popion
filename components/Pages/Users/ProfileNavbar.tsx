@@ -22,11 +22,11 @@ const ProfileNavbar = ({
         <div className="profile__actions__navbar" >
             <div>
                 <ProfileNavbarItem navbarState={navbarState} type="Posts" execute={() => { setNavbarState('Posts') }} />
-                <ProfileNavbarItem navbarState={navbarState} type="Mentions" execute={() => { setNavbarState('Mentions') }} />
+                {/* <ProfileNavbarItem navbarState={navbarState} type="Mentions" execute={() => { setNavbarState('Mentions') }} /> */}
                 <ProfileNavbarItem navbarState={navbarState} type="Likes" execute={() => { setNavbarState('Likes') }} />
                 <ProfileNavbarItem navbarState={navbarState} type="Images" execute={() => { setNavbarState('Images') }} />
                 <ProfileNavbarItem navbarState={navbarState} type="Saved posts" execute={() => { setNavbarState('Saved posts') }} />
-                <ProfileNavbarItem navbarState={navbarState} type="Tags" execute={() => { setNavbarState('Tags') }} />
+                {/* <ProfileNavbarItem navbarState={navbarState} type="Tags" execute={() => { setNavbarState('Tags') }} /> */}
             </div>
             <div>
                 {userInfo.loggedIn &&
@@ -52,7 +52,6 @@ const ProfileNavbar = ({
                                                 size="small"
                                                 execute={() => {
                                                     //@ts-ignore
-                                                    setFollowCount(followCount + 1)
                                                     useFollowUser(useFollowUserProps1);
                                                 }}
                                                 animation /> :
@@ -63,17 +62,16 @@ const ProfileNavbar = ({
                                                 size="small"
                                                 execute={() => {
                                                     //@ts-ignore
-                                                    setFollowCount(followCount - 1)
                                                     useFollowUser(useFollowUserProps2);
                                                 }}
                                                 animation />
                                         }
-                                        <Button
+                                        {/* <Button
                                             type="primary"
                                             text="Send message"
                                             icon={<FiSend size={16} />}
                                             size="small"
-                                            animation />
+                                            animation /> */}
                                     </>
                                 }
                                 <button className="more" onClick={() => { setUserDropdownState(!userDropdownState) }} >

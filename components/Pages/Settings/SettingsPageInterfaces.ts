@@ -13,7 +13,8 @@ interface SettingsNavbarItemProps {
     'Chat' |
     'Logout' |
     'Delete account',
-    selected?: boolean
+    selected?: boolean,
+    execute?(): void
 }
 interface SettingsFrameProps {
     selectedFrame: 
@@ -22,9 +23,28 @@ interface SettingsFrameProps {
     'Notifications' |
     'Chat'
 }
+type tagsObject = {
+    posts: boolean,
+    mentions: boolean,
+    likes: boolean,
+    images: boolean
+}
+interface SettingsInputProps {
+    type: 'name' | 'username' | 'email' | 'description',
+    value: any,
+    onChange(e : any): void
+}
+interface SettingsTagProps {
+    type: 'Posts' | 'Mentions' | 'Likes' | 'Images', 
+    selected: boolean,
+    execute(): void
+}
 
 export type { 
     SettingsNavbarProps,
     SettingsNavbarItemProps,
-    SettingsFrameProps
+    SettingsFrameProps,
+    tagsObject,
+    SettingsInputProps,
+    SettingsTagProps
 }

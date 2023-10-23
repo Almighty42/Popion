@@ -92,8 +92,8 @@ const Navbar = (props: NavbarProps) => {
                             <>
                                 {returnLinkItem('profile', navbarInfo.state,
                                 async () => { await router.push(`/users/${userInfo.username}`) } )}
-                                {returnLinkItem('settings', navbarInfo.state,
-                                async () => { await router.push('/settings') } )}
+                                {/* {returnLinkItem('settings', navbarInfo.state,
+                                async () => { await router.push('/settings') } )} */}
                             </>
                         )}
                     </ul>

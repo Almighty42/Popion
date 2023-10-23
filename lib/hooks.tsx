@@ -124,6 +124,7 @@ export const useReturnFilterPosts = async ({ type, userId }: returnFilterPosts):
             return post[0]
         })
         const resolvedPosts = await Promise.all(posts)
+
         return [
             ...resolvedPosts
         ]
@@ -152,12 +153,18 @@ export const useReturnFilterPosts = async ({ type, userId }: returnFilterPosts):
 
 export const usePostAlterArray = async ({ type, userId, docId, add }: postAlterArrayProps) => {
     if (add) {
-        if (type == 'savedPosts') firestore.doc(`users/${userId}`).update({ savedPosts: firebase.firestore.FieldValue.arrayUnion(docId) })
+        if (type == 'savedPosts') {
+            firestore.doc(`users/${userId}`).update({ savedPosts: firebase.firestore.FieldValue.arrayUnion(docId) });
+            firestore.doc(`users/${userId}/savedPosts/${docId}`).set({ postId: docId, userId })
+        }
         else if (type == 'likedPosts') firestore.doc(`users/${userId}`).update({ likedPosts: firebase.firestore.FieldValue.arrayUnion(docId) });
         else if (type == 'mutedUsers') firestore.doc(`users/${userId}`).update({ mutedUsers: firebase.firestore.FieldValue.arrayUnion(docId) });
         else if (type == 'blockedUsers') firestore.doc(`users/${userId}`).update({ bannedUsers: firebase.firestore.FieldValue.arrayUnion(docId) });
     } else {
-        if (type == 'savedPosts') firestore.doc(`users/${userId}`).update({ savedPosts: firebase.firestore.FieldValue.arrayRemove(docId) });
+        if (type == 'savedPosts') {
+            firestore.doc(`users/${userId}`).update({ savedPosts: firebase.firestore.FieldValue.arrayRemove(docId) });
+            firestore.doc(`users/${userId}/savedPosts/${docId}`).delete()
+        }
         else if (type == 'likedPosts') firestore.doc(`users/${userId}`).update({ likedPosts: firebase.firestore.FieldValue.arrayRemove(docId) })
         else if (type == 'mutedUsers') firestore.doc(`users/${userId}`).update({ mutedUsers: firebase.firestore.FieldValue.arrayRemove(docId) });
         else if (type == 'blockedUsers') firestore.doc(`users/${userId}`).update({ bannedUsers: firebase.firestore.FieldValue.arrayRemove(docId) });

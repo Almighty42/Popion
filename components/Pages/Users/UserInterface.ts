@@ -21,7 +21,7 @@ interface useFollowUserProps {
 }
 
 interface ProfileProps {
-    userObject: UserInfoProps,
+    userObject: UserInfoProps
     userId: string
 }
 interface ProfileItemProps {

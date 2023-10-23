@@ -2,7 +2,19 @@
 
 .settings--navbar {
     @include globals.section;
-    width: 329px;
+    @media (min-width: globals.$breakpointW-DesktopXL) or (min-height: globals.$breakpointH-DesktopXL) {
+        min-width: 329px;
+        max-width: 329px;
+    }
+    @media (max-width: globals.$breakpointW-DesktopXL) or (max-height: globals.$breakpointH-DesktopXL) {
+        min-width: 260px;
+        max-width: 260px;
+    }
+    @media (max-width: globals.$breakpointW-Desktop) or (max-height: globals.$breakpointH-Desktop) {
+        min-width: 254px;
+        max-width: 254px;
+    }
+    margin-right: 20px;
     flex-direction: column;
     &__item {
         margin: 12px 8px;
@@ -28,5 +40,77 @@
     }
 }
 .settings--frame {
-    
+    @include globals.section;
+    flex-direction: column;
+    width: 100%;
+    &__header {
+        flex-direction: column;
+        margin-bottom: 16px;
+        h5 {
+            margin-bottom: 8px;
+            color: globals.$neutral-500;
+        }
+        hr {
+            height: 2px;
+            width: 100%;
+            background-color: globals.$primary-100;
+        }
+    }
+    &__content {
+        padding: 0 20px;
+        flex-direction: column;
+        >:not(:last-child) {
+            margin-bottom: 12px;
+        }
+    }
+    &__input {
+        flex-direction: column;
+        width: 100%;
+        .p2 {
+            color: globals.$neutral-600;
+            margin-bottom: 4px;
+        }
+    }
+    &__tags {
+        justify-content: space-between;
+        align-items: center;
+        >:first-child {
+            color: globals.$neutral-600
+        }
+    }
+    &__tag {
+        padding: 12px 8px;
+        align-items: center;
+        .p1 {
+            margin: 0 6px;
+            color: globals.$primary-500
+        }
+        stroke: globals.$primary-500;
+        svg {
+            color: globals.$primary-500;
+        }
+        >:last-child {
+            cursor: pointer;
+        }
+        &--selected {
+            .p1 {
+                color: globals.$primary-200;
+                text-decoration: line-through;
+            }
+            >:first-child {
+                stroke: globals.$primary-200;
+            }
+        }
+        button {
+            padding: 0 !important;
+        }
+    }
+    &__actions {
+        &__buttons {
+            >:first-child {
+                margin-right: 16px;
+            }
+        }
+        justify-content: space-between;
+    }
 }

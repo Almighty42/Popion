@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 // Components
 import { returnPosts } from "@/components/Layout/Complex/Post/ReturnPosts";
-import ProfileDropdown from "./ProfileDropdown";
-import ProfileInfo from "./ProfileInfo";
-import ProfileNavbar from "./ProfileNavbar";
+import ProfileDropdown from "../../components/Pages/Users/ProfileDropdown";
+import ProfileInfo from "../../components/Pages/Users/ProfileInfo";
+import ProfileNavbar from "../../components/Pages/Users/ProfileNavbar";
 // Firebase
 import { firestore } from "@/lib/firebase";
 // Redux
@@ -13,11 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 // Hooks
 import { useFollowUser, useReturnFilterPosts, useReturnUserId, useReturnUserObject } from "@/lib/hooks";
 // Types
-import { ProfileProps } from "./UserInterface";
+import { ProfileProps } from "../../components/Pages/Users/UserInterface";
 // Other
 import { PostCompProps } from "@/utils/interfaces";
 // Styles
-import './UserPage.scss';
+import '@/components/Pages/Users/UserPage.scss';
+import { useRouter } from "next/router";
 
 const getAllUserIds = async () => {
 
@@ -34,23 +35,31 @@ export async function getStaticPaths() {
     const paths = await getAllUserIds()
     return {
         paths,
-        fallback: false
+        fallback: true
     }
 }
 
 export async function getStaticProps({ params }: { params: any }) {
 
-    const userId = await useReturnUserId({ username: params.user })
-    const userObject = await useReturnUserObject({ userId })
+    let userId = null;
+    let userObject = null
+
+    userId = await useReturnUserId({ username: params.user })
+    userObject = await useReturnUserObject({ userId })
+    //const testing = (await firestore.doc(`usernames/${params.user}`).get()).data()
 
     return {
         props: {
-            userObject,
-            userId
-        }
+            userId,
+            userObject
+        },
     }
+
 }
 const UserPage = ({ userObject, userId }: ProfileProps) => {
+
+    const router = useRouter()
+
     const [toggle, setToggle] = useState(false)
     const [ownerProfileCheck, setOwnerProfileCheck] = useState(false)
     const [loadingPosts, setLoadingPosts] = useState(false)

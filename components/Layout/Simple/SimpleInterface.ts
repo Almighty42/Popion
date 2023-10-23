@@ -6,7 +6,8 @@ interface ButtonProps {
     size?: 'small' | 'regular' | 'large';
     execute?(): void;
     animation?: boolean;
-    color?: 'standard' | 'green' | 'like' | 'disabled'
+    color?: 'standard' | 'green' | 'like' | 'disabled' | 'avatar' | 'red',
+    border?: 'border-present' | 'border-hidden'
 }
 interface BasicButtonProps {
     execute: any
@@ -31,7 +32,8 @@ interface InputProps {
     value?: string,
     onChange?: (e: any) => void,
     required?: boolean,
-    textarea?: boolean
+    textarea?: boolean,
+    inputRef?: any
 }
 
 export type { BasicButtonProps, ButtonProps, CommentButtonProps, ExtendedButtonProps, InputProps, LikeButtonProps }

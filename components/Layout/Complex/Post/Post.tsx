@@ -20,7 +20,7 @@ import toast from "react-hot-toast";
 import ReactLoading from 'react-loading';
 import { useRouter } from 'next/router';
 // Styles
-import './Post.scss'
+import './PostComp.scss'
 
 const Post = (props : PostProps) => {
   const dispatch = useDispatch()
@@ -52,6 +52,7 @@ const Post = (props : PostProps) => {
       setSaved('ghost')
       setLiked('ghost')
     } else {
+      const userId = useReturnUserId({ username: props.username })
       const savedPostsArray = props.userInfo.savedPosts
       const likedPostsArray = props.userInfo.likedPosts
       const mutedUsers = props.userInfo.mutedUsers
@@ -149,7 +150,7 @@ const Post = (props : PostProps) => {
                     <p className="p3 semibold"> {props.name} </p>
                     <p className="caption"> @{props.username} </p>
                   </div>
-                  <p className="caption"> Few minutes ago </p>
+                  {/* <p className="caption"> Few minutes ago </p> */}
                 </div>
               </div>
               <button className="post__morebutton" onClick={() => { setPostDropdownState(!postDropdownState) }} >
@@ -180,12 +181,13 @@ const Post = (props : PostProps) => {
                 :
                 <>
                   <p className="post__content__text p1">
-                    {props.content.split(/(#\w+)/g).map((part, index) => {
+                    {/* {props.content.split(/(#\w+)/g).map((part, index) => {
                       if (part.match(/^#\w+$/)) {
                         return <span onClick={() => {router.push(`/tags/${part.slice(1)}`)}} className="post__content__hashtag">{part}</span>;
                       }
                       return part;
-                    })}
+                    })} */}
+                    {props.content}
                   </p>
                   {props.image && !loading &&
                     <div className="post__content__image">
@@ -200,7 +202,7 @@ const Post = (props : PostProps) => {
                 {!editPostState ?
                   <>
                     <LikeButton likeCount={props.likeCount} execute={handleLike} type={liked} />
-                    <CommentButton commentCount={props.commentCount} />
+                    {/* <CommentButton commentCount={props.commentCount} /> */}
                   </> :
                   <>
                     <Button type="ghost" execute={() => { setEditPostState(false) }} color="standard" icon={<FiX size={16} />} size="small" text="Cancel" animation />

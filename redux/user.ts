@@ -51,7 +51,10 @@ const userSlice = createSlice({
       }
     },
     logoutUser: (state, action: any) => {
-      return { ...state, ...userInitialState }
+      return { 
+        ...state,
+        subscribedTags: [],
+        ...userInitialState }
     },
     handleSavePost: (state, action) => {
       if (action.payload.add) {
@@ -168,6 +171,13 @@ const userSlice = createSlice({
           ]
         }
       }
+    },
+    handlePullPosts: (state, action) => {
+      return {
+        ...state,
+        savedPosts: action.payload.savedPosts,
+        likedPosts: action.payload.likedPosts
+      }
     }
   },
 });
@@ -182,6 +192,7 @@ export const userActions = {
   handleBlockUser: userSlice.actions.handleBlockUser,
   handleFollow: userSlice.actions.handleFollow,
   handleFollowTag: userSlice.actions.handleFollowTag,
+  handlePullPosts: userSlice.actions.handlePullPosts,
 };
 
 export default userSlice.reducer;

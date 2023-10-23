@@ -12,6 +12,8 @@ import { motion } from "framer-motion";
 import Router from 'next/router'
 // Styles
 import './OtherComps.scss'
+import { useReturnUserId } from "@/lib/hooks";
+import { firestore } from "@/lib/firebase";
 
 interface DropdownProps {
 }
@@ -42,7 +44,11 @@ const Dropdown = ({  }: DropdownProps) => {
 const ProfileDropdown = () => {
     const dispatch = useDispatch()
 
+    const userInfo = useSelector((state: RootState) => state.user)
+
     const handleLogout = async () => {
+        const userId = await useReturnUserId({ username: userInfo.username })
+        firestore.doc(`users/${userId}`).update({ savedPosts: [], likedPosts: [] })
         dispatch(actions.feedActions.setLoadingState({ type: true, value: true }))
         dispatch(actions.userActions.logoutUser(''));
         dispatch(actions.dropdownActions.flip(''))
@@ -61,16 +67,11 @@ const ProfileDropdown = () => {
                 <p className='p2 semibold' > Profile </p>
             </button>
             <hr />
-            <button className='dropdown__item'>
+            {/* <button className='dropdown__item'>
                 <FiSettings size={24} />
                 <p className='p2 semibold' > Settings </p>
             </button>
-            <hr />
-            <button className='dropdown__item'>
-                <FiMoon size={24} />
-                <p className='p2 semibold' > Night mode </p>
-            </button>
-            <hr />
+            <hr /> */}
             <button className='dropdown__item' onClick={() => { handleLogout() }} >
                 <FiLogOut size={24} />
                 <p className='p2 semibold' > Logout </p>

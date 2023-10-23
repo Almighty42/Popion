@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 interface PopupFollowListProps {
   userId: string | undefined,
   userObject: UserInfoProps | undefined,
-  setLoading?: Dispatch<SetStateAction<boolean>>
+  setLoading?: any
 }
 interface ListItemProps {
   name: string,
@@ -32,7 +32,7 @@ interface ListItemProps {
   followingNum: number,
   followState: boolean,
   isOwner: boolean,
-  setLoading?: Dispatch<SetStateAction<boolean>>,
+  setLoading?: any
   loggedIn: boolean,
   blocked: boolean
 }
@@ -263,7 +263,7 @@ const ListItem = ({ name, username, followersNum, followingNum, followState, use
         text='Open profile'
         execute={async () => { 
         //@ts-ignore
-        setLoading(true) 
+        setLoading() 
         await router.push(`/users/${username}`) 
         window.location.reload() 
       }}

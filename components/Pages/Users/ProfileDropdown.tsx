@@ -88,11 +88,11 @@ const ProfileDropdown = ({
                     </>
                 }
             </button>
-            <hr />
+            {/* <hr />
             <button onClick={() => { handleSharePost(); setState(false) }} >
                 <FiShare2 size={24} />
                 <p className='p2 semibold' > Share user </p>
-            </button>
+            </button> */}
         </motion.div>
     )
 }

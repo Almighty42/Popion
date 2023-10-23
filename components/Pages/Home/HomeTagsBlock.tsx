@@ -59,11 +59,11 @@ const HomeTagsBlock = ({ loggedIn, subscribedTags }: HomeTagsBlockProps) => {
             <div className="tagsblock__header">
                 <h5 className="semibold" > {loggedIn ? 'For you' : 'Trending tags'} </h5>
                 <h6 className="semibold" > {loggedIn ? 'For you' : 'Trending tags'} </h6>
-                {loggedIn &&
+                {/* {loggedIn &&
                     <button>
                         <FiSettings size={24} />
                     </button>
-                }
+                } */}
             </div>
             <div className="tagsblock__tags">
                 {!loading ?

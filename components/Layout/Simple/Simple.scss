@@ -27,7 +27,7 @@
             @include globals.button(ghost, globals.$green-500, true, 0px);
         }
         &.green {
-            @include globals.svg-p(globals.$green-500);
+            @include globals.svg-p(globals.$green-600);
             background-color: globals.$white;
             border-color: globals.$green-500;
         }
@@ -35,6 +35,19 @@
             @include globals.svg-p(globals.$neutral-400);
             border-color: globals.$neutral-400;
             cursor: not-allowed
+        }
+        &.avatar {
+            @include globals.svg-p(globals.$yellow-600);
+            background-color: globals.$white;
+            border-color: globals.$yellow-500;
+        }
+        &.red {
+            @include globals.svg-p(globals.$red-500);
+            background-color: globals.$white;
+            border-color: globals.$red-500;
+        }
+        &.border-hidden {
+            border: none
         }
     }
     &.primary {

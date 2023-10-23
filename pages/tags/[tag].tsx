@@ -7,7 +7,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { FiHash, FiTag, FiUserMinus, FiUserPlus, FiUserX, FiX } from "react-icons/fi";
 import ReactLoading from 'react-loading';
 import { useDispatch, useSelector } from "react-redux";
-import { NestedLayout, withNestedLayout } from "../Layout";
+import { NestedLayout, withNestedLayout } from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { returnPosts } from "@/components/Layout/Complex/Post/ReturnPosts";
 

@@ -7,6 +7,8 @@ import userReducers, { userActions } from './user';
 import postReducers, { postActions } from './post';
 import imageReducers, { imageActions } from './image';
 import navbarReducers, { navbarActions } from './navbar'
+import settingsNavReducers, { settingsNavActions } from './settingsNav'
+import commentReplyReducers, { commentReplyActions } from './commentReply'
 // Redux persist
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -26,7 +28,9 @@ const rootReducer = {
   user: persistedReducer,
   post: postReducers,
   image: imageReducers,
-  navbar: navbarReducers
+  navbar: navbarReducers,
+  settingsNav: settingsNavReducers,
+  commentReply: commentReplyReducers,
 };
 
 
@@ -42,7 +46,9 @@ export const actions = {
   userActions,
   postActions,
   imageActions,
-  navbarActions
+  navbarActions,
+  settingsNavActions,
+  commentReplyActions
 };
 
 export type RootState = ReturnType<typeof store.getState>;
